@@ -1,6 +1,7 @@
 import {
   collection,
   getDocs,
+  onSnapshot,
   orderBy,
   query,
   refEqual,
@@ -151,4 +152,30 @@ export const setProjectLevel = (projectId, value) => {
       reject(error);
     }
   });
+};
+
+export const liveListenToUserProjects = (uid, onchange) => {
+  try {
+    const collectionRef = collection(db, "Project");
+    const q = query(
+      collectionRef,
+      where("uid", "==", uid),
+      orderBy("createdAt", "desc")
+    );
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+      const updatedData = snapshot.docs.map((doc) => ({
+        docId: doc.id,
+        ...doc.data(),
+      }));
+
+      console.log(updatedData);
+
+      onchange(updatedData);
+    });
+
+    // Clean up the listener on unmount
+    return () => unsubscribe();
+  } catch (error) {
+    console.error(error);
+  }
 };

@@ -26,7 +26,7 @@ import useTheme from "../../hooks/useTheme";
 const CreateQuizPage = () => {
   // Hooks
   const navigate = useNavigate();
-  const { userCredential } = useAuth();
+  const { userCredential } = useAuth() || {};
   const { theme } = useTheme();
 
   const [addedFile, setAddedFile] = useState(null);
@@ -98,7 +98,7 @@ const CreateQuizPage = () => {
       await increaseAccountXp(userCredential?.uid, xp);
 
       navigate(navigation.quizDashboard.base + "/" + projectId);
-      window.location.reload();
+      
     } catch (error) {
       console.error(error);
       if (error.message.includes("small-text")) {

@@ -33,7 +33,7 @@ const CreateProjectModal = ({
           <div className="fund-container">
             <p className="wallet">Wallet Funds</p>
             <p className="fund">
-              N {accountDetail?.wallet.toLocaleString("fr-FR") || 0}
+              N {(accountDetail?.wallet || 0).toLocaleString("fr-FR") || 0}
             </p>
           </div>
           <div className="bill-container">
@@ -71,7 +71,12 @@ const CreateProjectModal = ({
             isLoading={isGenerating}
             loadingText={"Generating Your Project"}
             onClick={() => OnCreate(xp, totalCost)}
-            disabled={totalCost > (accountDetail?.wallet || 0)}
+            disabled={
+              totalCost >
+              (isNaN(accountDetail?.wallet || 0) || !accountDetail?.wallet
+                ? 0
+                : accountDetail?.wallet)
+            }
           />
         </div>
       </div>

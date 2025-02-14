@@ -8,7 +8,10 @@ import Logo from "../../assets/logo-black.png";
 import LogoW from "../../assets/logo-white.png";
 import MiniLoader from "../MiniLoader/MiniLoader";
 import { toast } from "react-toastify";
-import { fetchAllProjectWithId } from "../../controllers/projects";
+import {
+  fetchAllProjectWithId,
+  liveListenToUserProjects,
+} from "../../controllers/projects";
 import useAuth from "../../hooks/useAuth";
 import useTheme from "../../hooks/useTheme";
 
@@ -52,6 +55,16 @@ const Sidebar = () => {
   useEffect(() => {
     if (!userCredential) return;
     fetchAndUpdateProject();
+
+    const unsubscribe = liveListenToUserProjects(
+      userCredential?.uid,
+      (data) => {
+        setProjects(data);
+        setDisplayProjects(data);
+        console.log(data);
+      }
+    );
+    return () => unsubscribe();
   }, [userCredential]);
 
   useEffect(() => {
