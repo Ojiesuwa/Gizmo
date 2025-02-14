@@ -76,8 +76,8 @@ const ComplaintPage = () => {
       <div className="line"></div>
       <p className="heading-4">Complaints</p>
       <div className="complaint-container">
-        {userComplaint?.map((data) => (
-          <ComplaintItem data={data} />
+        {userComplaint?.map((data, index) => (
+          <ComplaintItem data={data} key={index} />
         ))}
       </div>
       {accountDetail?.root && window.innerWidth > 800 && <AllComplaints />}

@@ -50,8 +50,8 @@ const LeaderBoardPage = () => {
           </div>
         </div>
         <div className="main">
-          {ranking?.map((data) => (
-            <div className="board-item">
+          {ranking?.map((data, index) => (
+            <div className="board-item" key={index}>
               <p className="name-cont">{data?.username}</p>
               <p className="ranking-cont">{data?.rank}</p>
               <p className="xp-cont">{data?.xp}</p>

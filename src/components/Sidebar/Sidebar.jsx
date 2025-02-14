@@ -43,7 +43,7 @@ const Sidebar = () => {
   };
 
   const handleSearchAction = (keyword) => {
-    console.log(projects);
+    //console.log(projects);
 
     setDisplayProjects(
       projects?.filter((project) =>
@@ -61,7 +61,7 @@ const Sidebar = () => {
       (data) => {
         setProjects(data);
         setDisplayProjects(data);
-        console.log(data);
+        //console.log(data);
       }
     );
     return () => unsubscribe();
@@ -167,8 +167,9 @@ const FullSideBar = ({
                 No project Yet
               </p>
             )}
-            {displayProjects.map((project) => (
+            {displayProjects.map((project, index) => (
               <SideBarProjectPreview
+                key={index}
                 title={project?.title}
                 createdAt={project?.createdAt}
                 onClick={() => {

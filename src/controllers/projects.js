@@ -48,7 +48,7 @@ export const createNewProject = (projectParameters, pdfBlob, uid) => {
 
       // Create Lecture
       const lecture = await generateExplanation({ quizDb: quizDatabase });
-      console.log(lecture);
+      //console.log(lecture);
 
       // Upload QuizDb to firebase and deduct id
       const quizDbId = await uploadQuizDb({ quizDb: quizDatabase });
@@ -57,11 +57,11 @@ export const createNewProject = (projectParameters, pdfBlob, uid) => {
 
       const lectureId = await uploadExplanation({ lecture });
 
-      console.log(lectureId, quizDbId);
+      //console.log(lectureId, quizDbId);
 
       // Create Quiz
       const quiz = generateQuizFromDb({ quizDb: quizDatabase });
-      console.log(quiz);
+      //console.log(quiz);
 
       // Upload and extract quiz id
       const quizId = await uploadQuiz({ quiz });
@@ -77,7 +77,7 @@ export const createNewProject = (projectParameters, pdfBlob, uid) => {
         ...projectParameters,
       };
 
-      console.log(payload);
+      //console.log(payload);
 
       // Upload payload and deduce id
       const projectId = await addDocument("Project", payload);
@@ -94,7 +94,7 @@ export const createNewProject = (projectParameters, pdfBlob, uid) => {
 export const validateProjectName = (title, uid) => {
   return new Promise(async (resolve, reject) => {
     try {
-      console.log(title, uid);
+      //console.log(title, uid);
 
       const colRef = collection(db, "Project");
       const q = query(
@@ -132,7 +132,7 @@ export const fetchAllProjectWithId = (uid) => {
   return new Promise(async (resolve, reject) => {
     try {
       const res = await getCollectionByField("Project", "uid", uid);
-      console.log(res);
+      //console.log(res);
 
       resolve(res);
     } catch (error) {
@@ -168,7 +168,7 @@ export const liveListenToUserProjects = (uid, onchange) => {
         ...doc.data(),
       }));
 
-      console.log(updatedData);
+      //console.log(updatedData);
 
       onchange(updatedData);
     });

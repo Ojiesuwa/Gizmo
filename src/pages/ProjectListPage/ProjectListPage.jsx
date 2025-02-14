@@ -30,7 +30,7 @@ const ProjectListPage = () => {
   };
 
   const handleSearchAction = (keyword) => {
-    console.log(project);
+    //console.log(project);
 
     setDisplayProject(
       project?.filter((data) =>
@@ -80,8 +80,8 @@ const ProjectListPage = () => {
         </>
       ) : (
         <div className="main-body fade-up">
-          {displayProject?.map((data) => (
-            <ProjectItem projectInformation={data} />
+          {displayProject?.map((data, index) => (
+            <ProjectItem projectInformation={data} key={index} />
           ))}
         </div>
       )}
