@@ -146,12 +146,16 @@
 }
 
 
-.QuizViewPage .footer-cont .right-control i{
+.fa-circle-arrow-down{
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
   top: -25px;
   font-size: 19px;
+}
+
+.rel-pos{
+  position: relative;
 }
 
 @media screen and (max-width: 700px) {

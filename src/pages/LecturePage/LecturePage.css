@@ -187,6 +187,7 @@
 .LecturePage .lecture-main .heading {
   border-bottom: 1px solid var(--reset-btn-bg);
   padding-bottom: 10px;
+  overflow: visible;
 }
 
 .LecturePage .lecture-main .heading button {

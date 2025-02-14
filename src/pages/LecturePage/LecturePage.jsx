@@ -27,48 +27,53 @@ const LecturePage = () => {
   const [explanationIndex, setExplanationIndex] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [isQuestioning, setIsQuestioning] = useState(false);
+  const [hasFinished, setHasFinished] = useState(false);
+
+  console.log(hasIntroduced);
+  console.log(explanationIndex);
 
   const handleAskQuestion = () => {
-    if (window.responsiveVoice) {
-      setTimeout(() => {
-        setIsQuestioning(true);
-      }, 1500);
-      responsiveVoice.speak(
-        "I see you have a question, Feel free to ask " +
-          accountDetail?.firstname,
-        "Australian Female",
-        {
-          rate: 1.1,
-          onstart: () => setIsPlaying(true),
-          onend: () => {
-            setHasIntroduced(true);
-            setIsPlaying(false);
-          },
-          onerror: () => setIsPlaying(false),
-        }
-      );
-    }
+    setHasIntroduced(true);
+    setIsQuestioning(true);
+    // if (window.responsiveVoice) {
+    //   setTimeout(() => {
+    //     setIsQuestioning(true);
+    //   }, 1500);
+    //   responsiveVoice.speak(
+    //     "I see you have a question, Feel free to ask " +
+    //       accountDetail?.firstname,
+    //     "Australian Female",
+    //     {
+    //       rate: 1.1,
+    //       onstart: () => setIsPlaying(true),
+    //       onend: () => {
+    //         setIsPlaying(false);
+    //       },
+    //       onerror: () => setIsPlaying(false),
+    //     }
+    //   );
+    // }
   };
   const handleHideQuestionBar = () => {
     setIsQuestioning(false);
 
-    if (window.responsiveVoice) {
-      window.responsiveVoice.cancel();
-      responsiveVoice.speak(
-        accountDetail?.firstname +
-          ", I hope I have been able to answer your questions ",
-        "Australian Female",
-        {
-          rate: 1.1,
-          onstart: () => setIsPlaying(true),
-          onend: () => {
-            setIsPlaying(false);
-            handleCourseChange(explanationIndex, false);
-          },
-          onerror: () => setIsPlaying(false),
-        }
-      );
-    }
+    // if (window.responsiveVoice) {
+    //   window.responsiveVoice.cancel();
+    //   responsiveVoice.speak(
+    //     accountDetail?.firstname +
+    //       ", I hope I have been able to answer your questions ",
+    //     "Australian Female",
+    //     {
+    //       rate: 1.1,
+    //       onstart: () => setIsPlaying(true),
+    //       onend: () => {
+    //         setIsPlaying(false);
+    //         handleCourseChange(explanationIndex, false);
+    //       },
+    //       onerror: () => setIsPlaying(false),
+    //     }
+    //   );
+    // }
   };
   const handleFetchAndUpdateState = async () => {
     try {
@@ -97,28 +102,28 @@ const LecturePage = () => {
   };
 
   const handleIntroductionSpeech = () => {
-    if (window.responsiveVoice) {
-      if (isPlaying) {
-        window.responsiveVoice.cancel();
-        setIsPlaying(false);
-      } else {
-        window.responsiveVoice.speak(
-          "Hi, My name is Olivia. I will be your tutor for Gizmo, and we will be discussing your quiz content before you begin the quiz. Let's begin",
-          "Australian Female",
-          {
-            rate: 1.1,
-            onstart: () => setIsPlaying(true),
-            onend: () => {
-              setHasIntroduced(true);
-              setIsPlaying(false);
-            },
-            onerror: () => setIsPlaying(false),
-          }
-        );
-      }
-    } else {
-      console.error("ResponsiveVoice is not available");
-    }
+    setHasIntroduced(true);
+    // if (window.responsiveVoice) {
+    //   if (isPlaying) {
+    //     window.responsiveVoice.cancel();
+    //     setIsPlaying(false);
+    //   } else {
+    //     window.responsiveVoice.speak(
+    //       "Hi, My name is Olivia. I will be your tutor for Gizmo, and we will be discussing your quiz content before you begin the quiz. Let's begin",
+    //       "Australian Female",
+    //       {
+    //         rate: 1.1,
+    //         onstart: () => setIsPlaying(true),
+    //         onend: () => {
+    //           setIsPlaying(false);
+    //         },
+    //         onerror: () => setIsPlaying(false),
+    //       }
+    //     );
+    //   }
+    // } else {
+    //   console.error("ResponsiveVoice is not available");
+    // }
   };
 
   const handleExplanationSpeech = () => {
@@ -134,6 +139,7 @@ const LecturePage = () => {
             rate: 1.18,
             onstart: () => setIsPlaying(true),
             onend: () => {
+              setIsPlaying(false);
               handleChangeToNextTopic();
             },
             onerror: () => setIsPlaying(false),
@@ -149,39 +155,36 @@ const LecturePage = () => {
     if (update) {
       setExplanationIndex(newIndex);
     }
-    if (window.responsiveVoice) {
-      if (isPlaying) {
-        window.responsiveVoice.cancel();
-        window.responsiveVoice.cancel();
-        setIsPlaying(false);
-      }
-      window.responsiveVoice.speak(
-        explanation[newIndex].explanation,
-        "Australian Female",
-        {
-          rate: 1.1,
-          onstart: () => setIsPlaying(true),
-          onend: () => {
-            handleChangeToNextTopic();
-          },
-          onerror: () => setIsPlaying(false),
-        }
-      );
-    } else {
-      console.error("ResponsiveVoice is not available");
-    }
+    // if (window.responsiveVoice) {
+    //   if (isPlaying) {
+    //     window.responsiveVoice.cancel();
+    //     window.responsiveVoice.cancel();
+    //     setIsPlaying(false);
+    //   }
+    //   window.responsiveVoice.speak(
+    //     explanation[newIndex].explanation,
+    //     "Australian Female",
+    //     {
+    //       rate: 1.1,
+    //       onstart: () => setIsPlaying(true),
+    //       onend: () => {
+    //         handleChangeToNextTopic();
+    //       },
+    //       onerror: () => setIsPlaying(false),
+    //     }
+    //   );
+    // } else {
+    //   console.error("ResponsiveVoice is not available");
+    // }
   };
 
   const handleSpaceBarClick = () => {
     if (!hasIntroduced) {
-      if (!isPlaying) {
-        handleIntroductionSpeech();
-      } else {
-        setHasIntroduced(true);
-        setIsPlaying(false);
-        window.responsiveVoice.cancel();
-        handleCourseChange(0, false);
-      }
+      setHasIntroduced(true);
+
+      setIsPlaying(false);
+      window.responsiveVoice.cancel();
+      handleCourseChange(0, false);
     } else {
       if (isQuestioning) return;
       handleExplanationSpeech();
@@ -189,10 +192,57 @@ const LecturePage = () => {
   };
 
   const handleChangeToPreviousTopic = () => {
-    if (explanationIndex === 0) return;
+    console.log(explanationIndex);
+
+    // if (explanationIndex === 0) return;
     setExplanationIndex((p) => {
       const newValue = p === 0 ? 0 : p - 1;
       handleCourseChange(newValue, false);
+      return newValue;
+    });
+  };
+
+  const handleChangeToNextTopic = () => {
+    console.log("Course has  been moved to the next topic");
+
+    setExplanationIndex((p) => {
+      p = parseInt(p);
+
+      const newValue = parseInt(p === explanation.length - 1 ? p : p + 1);
+
+      if (parseInt(p + 1) === explanation.length && !isLoading) {
+        // setHasFinished(true);
+        toast.success(
+          "You have successfully completed your lecture. Click Jump to quiz to continue"
+        );
+        // if (window.responsiveVoice) {
+        //   if (isPlaying) {
+        //     window.responsiveVoice.cancel();
+        //     window.responsiveVoice.cancel();
+        //     setIsPlaying(false);
+        //   }
+        //   // handleCompleteLecture();
+        //   // window.responsiveVoice.speak(
+        //   //   "This is the end of our lecture. Now you are prepared for the quiz. Your quiz will begin in 5 seconds",
+        //   //   "Australian Female",
+        //   //   {
+        //   //     rate: 1.1,
+        //   //     onstart: () => setIsPlaying(true),
+        //   //     onend: () => {
+        //   //       setTimeout(() => {
+        //   //       }, 5000);
+        //   //       setIsPlaying(false);
+        //   //       setIsLoading(true);
+        //   //     },
+        //   //     onerror: () => setIsPlaying(false),
+        //   //   }
+        //   // );
+        // } else {
+        //   console.error("ResponsiveVoice is not available");
+        // }
+      } else {
+        handleCourseChange(newValue, false);
+      }
       return newValue;
     });
   };
@@ -215,50 +265,6 @@ const LecturePage = () => {
       console.error(error);
       toast.error("Error loading project");
     }
-  };
-
-  const handleChangeToNextTopic = () => {
-    console.log(explanationIndex);
-    console.log("Course has  been moved to the next topic");
-
-    console.log(explanationIndex, explanation.length);
-
-    setExplanationIndex((p) => {
-      p = parseInt(p);
-
-      const newValue = parseInt(p === explanation.length - 1 ? p : p + 1);
-
-      if (parseInt(p + 1) === explanation.length && !isLoading) {
-        if (window.responsiveVoice) {
-          if (isPlaying) {
-            window.responsiveVoice.cancel();
-            window.responsiveVoice.cancel();
-            setIsPlaying(false);
-          }
-          window.responsiveVoice.speak(
-            "This is the end of our lecture. Now you are prepared for the quiz. Your quiz will begin in 5 seconds",
-            "Australian Female",
-            {
-              rate: 1.1,
-              onstart: () => setIsPlaying(true),
-              onend: () => {
-                setTimeout(() => {
-                  handleCompleteLecture();
-                }, 5000);
-                setIsPlaying(false);
-                setIsLoading(true);
-              },
-              onerror: () => setIsPlaying(false),
-            }
-          );
-        } else {
-          console.error("ResponsiveVoice is not available");
-        }
-      } else {
-        handleCourseChange(newValue, false);
-      }
-      return newValue;
-    });
   };
 
   const handleQuizHome = () => {
@@ -297,13 +303,14 @@ const LecturePage = () => {
         handleChangeToNextTopic();
       }
     };
+    document.removeEventListener("keydown", handleKeyDown);
 
     document.addEventListener("keydown", handleKeyDown);
 
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
     };
-  }, [isPlaying, setIsPlaying]);
+  }, [hasIntroduced]);
 
   return (
     <div className="LecturePage fade">
@@ -412,6 +419,7 @@ const LectureScreen = ({
   handleAskQuestion,
   project,
   handleCompleteLecture,
+  hasFinished,
 }) => {
   const lectureRef = useRef(null);
   const navigate = useNavigate();
@@ -444,10 +452,12 @@ const LectureScreen = ({
               : !hasIntroduced && isPlaying
               ? "Skip Introduction"
               : hasIntroduced && !isPlaying
-              ? "Continue Lecture"
-              : "Stop Lecture"}
+              ? "Speak Lecture"
+              : "Stop Speech"}
           </button>
-          <button onClick={handleCompleteLecture}>Skip</button>
+          <div className="rel-pos ">
+            <button onClick={handleCompleteLecture}>Jump to Quiz</button>
+          </div>
         </div>
       </div>
       <div className="main-text-wrapper" ref={lectureRef}>
