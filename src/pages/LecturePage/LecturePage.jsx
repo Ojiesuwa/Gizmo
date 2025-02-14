@@ -294,9 +294,13 @@ const LecturePage = () => {
         handleSpaceBarClick();
       }
       if (event.key === "Q" || event.key === "q") {
+        responsiveVoice.cancel();
+        setIsPlaying(false);
         handleAskQuestion();
       }
       if (event.code === "ArrowLeft" && hasIntroduced) {
+        responsiveVoice.cancel();
+        setIsPlaying(false);
         handleChangeToPreviousTopic();
       }
       if (event.code === "ArrowRight" && hasIntroduced) {
