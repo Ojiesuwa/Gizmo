@@ -212,9 +212,7 @@ const LecturePage = () => {
 
       if (parseInt(p + 1) === explanation.length && !isLoading) {
         // setHasFinished(true);
-        toast.success(
-          "You have successfully completed your lecture. Click Jump to quiz to continue"
-        );
+        toast.success("Lecture complete. Click jump to quiz");
         // if (window.responsiveVoice) {
         //   if (isPlaying) {
         //     window.responsiveVoice.cancel();
@@ -459,9 +457,8 @@ const LectureScreen = ({
               ? "Speak Lecture"
               : "Stop Speech"}
           </button>
-          <div className="rel-pos ">
-            <button onClick={handleCompleteLecture}>Jump to Quiz</button>
-          </div>
+
+          <button onClick={handleCompleteLecture}>Jump to Quiz</button>
         </div>
       </div>
       <div className="main-text-wrapper" ref={lectureRef}>

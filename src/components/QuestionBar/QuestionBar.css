@@ -67,6 +67,14 @@
   margin-bottom: 6px;
 }
 
+.QuestionBar .response-cont p{
+  font-size: 14px;
+  font-family: "Montserrat";
+  white-space: pre-line;
+  margin-top: 20px;
+  line-height: 150%;
+}
+
 @media screen and (max-width: 700px) {
   .QuestionBar {
     width: calc(100% - 20px);
@@ -87,5 +95,4 @@
   .QuestionBar .hide-cont {
     margin-top: 10px;
   }
-
 }

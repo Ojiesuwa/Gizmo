@@ -137,7 +137,6 @@
   width: 130px;
 }
 
-
 .QuizViewPage .footer-cont .right-control {
   position: relative;
   display: flex;
@@ -145,8 +144,7 @@
   align-items: center;
 }
 
-
-.fa-circle-arrow-down{
+.fa-circle-arrow-down {
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
@@ -154,13 +152,13 @@
   font-size: 19px;
 }
 
-.rel-pos{
+.rel-pos {
   position: relative;
 }
 
 @media screen and (max-width: 700px) {
   .QuizViewPage {
-    padding-top: 40px;
+    padding-top: 60px;
     overflow: hidden;
   }
 

@@ -248,6 +248,27 @@ export const deduceScorePerQuizType = (quiz) => {
   return typeObject;
 };
 
+export const generateAnswerToQuizQuestion = (question, explanation) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      setTimeout(() => {
+        resolve(`This principle is explained by Newton’s First Law of Motion, also known as the law of inertia. It states that an object at rest remains at rest, and an object in motion continues in motion with the same speed and in the same direction unless acted upon by an external force. This happens because objects naturally resist changes to their state of motion due to their inertia.
+
+        For example, if you slide a book across a table, it eventually stops due to friction—an external force. In space, however, where there is little to no friction, an object would keep moving indefinitely in the same direction unless another force, like gravity or collision, interferes.
+
+        For example, if you slide a book across a table, it eventually stops due to friction—an external force. In space, however, where there is little to no friction, an object would keep moving indefinitely in the same direction unless another force, like gravity or collision, interferes.
+        
+        For example, if you slide a book across a table, it eventually stops due to friction—an external force. In space, however, where there is little to no friction, an object would keep moving indefinitely in the same direction unless another force, like gravity or collision, interferes.
+
+        In summary, motion doesn’t stop on its own; it requires an external force, which is why astronauts experience weightlessness and why seatbelts are crucial in a moving car! `);
+      }, 3000);
+    } catch (error) {
+      console.error(error);
+      reject(error);
+    }
+  });
+};
+
 // [
 //   {
 //     type: "mcq",
