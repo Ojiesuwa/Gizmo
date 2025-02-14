@@ -1,0 +1,17 @@
+.Loader {
+  width: 100vw;
+  /* height: calc(100svh - 65px); */
+  height: 100svh;
+  position: fixed;
+  z-index: 400;
+  left: 0;
+  top: 0;
+  background-color: var(--background-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.Loader img {
+  width: 50px;
+}

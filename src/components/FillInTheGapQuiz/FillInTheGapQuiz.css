@@ -1,0 +1,37 @@
+.FillInTheGapQuiz .question-wrapper {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  row-gap: 20px;
+  align-items: start;
+  height: fit-content;
+  width: 100%;
+  gap: 8px;
+  overflow-y: auto;
+  flex-shrink: 0;
+}
+
+.FillInTheGapQuiz input {
+  width: 140px;
+  border: 0;
+  border-bottom: 1px solid var(--reset-btn-bg);
+  border-radius: 0;
+  padding: 0;
+  height: fit-content;
+  font-size: 17px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  color: var(--reset-btn-bg);
+}
+
+.FillInTheGapQuiz p {
+  line-height: normal;
+  height: 40px;
+}
+
+.fig-correct input {
+  color: green;
+}
+.fig-incorrect input {
+  color: red;
+}

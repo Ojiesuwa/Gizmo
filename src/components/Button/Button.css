@@ -1,0 +1,20 @@
+/* .Button {
+  display: flex;
+} */
+
+.loading-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  opacity: 0.6;
+}
+
+.loading-btn img {
+  height: 20px;
+}
+
+.loading-btn:hover {
+  cursor: not-allowed;
+  transform: none;
+}

@@ -1,0 +1,19 @@
+1 / 27 / 25 (5:12pm)
+
+Just splitted text and added restraint for cluster limit
+
+______________________________________________________________________________________________________________________________________________
+
+Next:
+-----
+Rethink the division logic. Do i make the cluster based on single questions. then generate four types of questions from the cluster with which I'll randomly select in order to create new questions
+
+Decision: "I'll stay with this"
+
+______________________________________________________________________________________________________________________________________________
+
+IDEA:
+-----
+The quiz will be generated first, then explanation will be generated afterwards. And user will be asked whether or not they want an explanation before this quiz("Saving Money"). The explanation will be centered on the contents of the quiz. But it will be topic based
+
+______________________________________________________________________________________________________________________________________________

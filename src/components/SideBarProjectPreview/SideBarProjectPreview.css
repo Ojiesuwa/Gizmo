@@ -1,0 +1,18 @@
+.SideBarProjectPreview {
+}
+
+.SideBarProjectPreview:hover {
+  cursor: pointer;
+  opacity: 0.6;
+}
+
+.SideBarProjectPreview .p-title {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.SideBarProjectPreview .p-date {
+  font-size: 12px;
+  font-weight: 400;
+  opacity: 0.7;
+}

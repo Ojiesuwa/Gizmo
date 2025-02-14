@@ -1,0 +1,30 @@
+.Timer {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  width: 100%;
+  gap: 30px;
+  background-color: var(--background-color);
+
+}
+.timer-cont-2 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.timer-cont-2 input {
+  width: 55px;
+  appearance: none;
+  text-align: center;
+}
+
+.Timer #dem {
+  font-size: 15px;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}

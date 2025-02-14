@@ -1,0 +1,18 @@
+.ObjectiveQuiz {
+  padding-bottom: 200px;
+  margin-bottom: 20px;
+  height: 100%;
+  width: 100%;
+}
+.ObjectiveQuiz .right-option {
+  color: green;
+}
+.ObjectiveQuiz .wrong-option {
+  color: red;
+}
+
+.filler {
+  height: 40px;
+  width: 100%;
+  flex-shrink: 0;
+}

@@ -1,0 +1,155 @@
+.CreateQuizPage {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.CreateQuizPage .quiz-main-cont {
+  width: fit-content;
+  min-width: 500px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+  overflow-y: auto;
+  padding: 0 30px;
+}
+
+.CreateQuizPage .quiz-main-cont::-webkit-scrollbar {
+  display: none;
+}
+
+.CreateQuizPage .added-file {
+  padding-top: 30px;
+}
+
+.CreateQuizPage .not-added-file {
+  justify-content: center;
+}
+
+.CreateQuizPage .comp-name p {
+  font-size: 120px;
+  font-weight: 600;
+}
+
+.CreateQuizPage .comp-name {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+.CreateQuizPage .comp-name img {
+  height: 95px;
+}
+
+.CreateQuizPage .phrase-cont {
+  margin-top: -20px;
+  max-width: 500px;
+  width: 100%;
+}
+
+.CreateQuizPage .phrase-cont p {
+  font-size: 14px;
+  text-align: center;
+}
+
+.CreateQuizPage .add-btn {
+  margin-top: 30px;
+  flex-shrink: 0;
+}
+
+.CreateQuizPage .add-btn i {
+  color: var(--background-color);
+  margin-left: 10px;
+}
+
+.CreateQuizPage .line {
+  margin-top: 30px;
+  margin-bottom: 20px;
+}
+
+.CreateQuizPage .form-cont {
+  height: 100%;
+  width: 100%;
+  overflow-y: visible;
+  padding-bottom: 100px;
+}
+
+.CreateQuizPage .form-cont::-webkit-scrollbar {
+  display: none;
+}
+
+.CreateQuizPage .form-cont p {
+  font-size: 14px;
+}
+.CreateQuizPage .check-box-in {
+  flex-shrink: 0;
+  flex-grow: 0;
+  width: 15px;
+  padding: 0;
+}
+
+.CreateQuizPage .sub-cont {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.CreateQuizPage .explanation-cont {
+  margin-top: 30px;
+}
+
+.CreateQuizPage .timer-cont {
+  margin-top: 15px;
+}
+
+.CreateQuizPage .inactive-option {
+  pointer-events: none;
+  opacity: 0.5;
+}
+.CreateQuizPage .active-option {
+  pointer-events: fill;
+  opacity: 1;
+}
+
+.CreateQuizPage .sub-cont input {
+  height: 15px;
+  width: 15px;
+}
+
+.CreateQuizPage .time-input-cont {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-top: 30px;
+}
+
+.CreateQuizPage .gen-btn {
+  margin-top: 40px;
+}
+
+@media screen and (max-width: 800px) {
+  .CreateQuizPage .quiz-main-cont {
+    min-width: auto;
+    width: 100vw;
+    padding: 80px 15px 20px;
+  }
+
+  .CreateQuizPage .comp-name {
+    gap: 15px;
+  }
+  .CreateQuizPage .comp-name p {
+    font-size: 50px;
+  }
+  .CreateQuizPage .comp-name img {
+    height: 40px;
+  }
+
+  .CreateQuizPage .phrase-cont {
+    margin-top: 0;
+  }
+}

@@ -1,0 +1,40 @@
+.ExplanationBox {
+  width: 100%;
+  height: fit-content;
+  background-color: var(--sidebar-background);
+  margin-top: 20px;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 20px;
+  flex-shrink: 0;
+}
+
+.ExplanationBox .heading {
+  width: 100%;
+  height: 50px;
+  background-color: var(--reset-btn-bg);
+  padding: 0 30px;
+  display: flex;
+  align-items: center;
+}
+.ExplanationBox .heading p {
+  color: var(--background-color);
+  height: fit-content;
+}
+
+.ExplanationBox .body {
+  padding: 20px 30px;
+  white-space: pre-line;
+}
+
+@media screen and (max-width: 700px) {
+  .ExplanationBox .heading {
+    padding: 0 20px;
+  }
+  .ExplanationBox .body {
+    padding: 20px 20px;
+  }
+  .ExplanationBox .body {
+    font-size: 14px;
+  }
+}

@@ -1,0 +1,165 @@
+.AccountPage {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 20px 30px 100px;
+  overflow-y: auto;
+}
+
+.AccountPage .header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.AccountPage .header .theme-cont {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.AccountPage .header select {
+  appearance: none;
+  width: fit-content;
+  flex-shrink: 0;
+  padding: 0 20px;
+  height: 40px;
+}
+
+.AccountPage .display-cont {
+  margin-top: 40px;
+  padding: 30px 30px;
+  border: 1.5px solid var(--stroke-color);
+  height: fit-content;
+  min-height: 300px;
+  border-radius: 10px;
+  display: flex;
+  gap: 30px;
+}
+
+.AccountPage .left {
+  width: 60%;
+  border-right: 1px solid var(--stroke-color);
+}
+
+.AccountPage .disp-name {
+  font-size: 50px;
+  font-weight: 800;
+  letter-spacing: 5px;
+}
+
+.AccountPage .disp-email {
+  margin-top: 10px;
+  font-weight: 500;
+  letter-spacing: 2px;
+}
+
+.AccountPage .disp-user {
+  margin-top: 30px;
+}
+
+.AccountPage .right .info-cont {
+  margin-bottom: 20px;
+}
+
+.AccountPage .right p {
+  margin-top: 5px;
+  font-size: 16px;
+}
+
+.AccountPage .form-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  column-gap: 40px;
+  row-gap: 20px;
+}
+
+.AccountPage .form-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.AccountPage .seperator {
+  margin-top: 70px;
+  margin-bottom: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.AccountPage .seperator button {
+  width: 40%;
+  max-width: 150px;
+}
+
+.AccountPage .theme-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.AccountPage .footer-cont {
+  margin-top: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.AccountPage .option-wrapper {
+  display: flex;
+  gap: 30px;
+}
+
+.AccountPage .footer-cont button {
+  width: 50%;
+}
+
+button i {
+  color: var(--background-color);
+  margin-left: 10px;
+  font-size: 16px;
+}
+
+@media screen and (max-width: 700px) {
+  .AccountPage {
+    padding: 60px 20px;
+  }
+  .AccountPage .display-cont {
+    flex-direction: column;
+    height: fit-content;
+    flex-shrink: 0;
+    padding: 20px 20px;
+    overflow: hidden;
+  }
+  .AccountPage .display-cont .disp-name {
+    font-size: 30px;
+  }
+
+  .AccountPage .display-cont .disp-email {
+    font-size: 12px;
+    width: 100%;
+    word-wrap: break-word;
+  }
+
+  .AccountPage .display-cont .info-cont p {
+    font-size: 14px;
+  }
+
+  .AccountPage .display-cont .left {
+    border-right: 0;
+    height: fit-content;
+    flex-shrink: 0;
+    width: 100%;
+  }
+  .AccountPage .display-cont .right {
+    height: fit-content;
+    overflow: visible;
+    flex-shrink: 0;
+  }
+  .AccountPage .form-container {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,98 @@
+.AllComplaints {
+  width: 400px;
+  height: 100svh;
+  position: fixed;
+  top: 0;
+
+  background-color: var(--sidebar-background);
+  padding: 20px 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.active-comp {
+  right: 0;
+}
+
+.inactive-comp {
+  right: -400px;
+}
+
+.AllComplaints .main {
+  height: 100%;
+  width: 100%;
+  overflow-y: auto;
+  /* padding-right: 10px; */
+}
+
+.AllComplaints .main::-webkit-scrollbar {
+  display: none;
+}
+
+.AllComplaints .master-c-item {
+  width: 100%;
+  height: fit-content;
+  min-height: 300px;
+  border: 1px solid var(--stroke-color);
+  margin-bottom: 80px;
+  border-radius: 5px;
+  padding: 20px 15px;
+}
+
+.AllComplaints .user-cont {
+  margin-bottom: 5px;
+}
+
+.AllComplaints .user-cont p {
+  font-size: 13px;
+}
+
+.AllComplaints .line {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.AllComplaints .complaint {
+  font-size: 13px;
+}
+
+.AllComplaints textarea {
+  margin-top: 0px;
+  font-size: 12px;
+  min-height: 100px;
+}
+
+.AllComplaints .fa-circle-chevron-right {
+  position: absolute;
+  left: -40px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 20px;
+
+  &:hover {
+    transform: translateY(-50%) translateX(5px);
+    cursor: pointer;
+  }
+}
+
+.AllComplaints .fa-circle-chevron-left {
+  position: absolute;
+  left: -40px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 20px;
+
+  &:hover {
+    transform: translateY(-50%) translateX(-5px);
+    cursor: pointer;
+  }
+}
+
+.AllComplaints .not-responded {
+  border-color: rgba(255, 0, 0, 0.362);
+}
+
+.AllComplaints .responded {
+  border-color: rgba(0, 128, 0, 0.718);
+}

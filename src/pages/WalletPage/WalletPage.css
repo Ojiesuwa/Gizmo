@@ -1,0 +1,69 @@
+.WalletPage {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px 30px;
+}
+
+.WalletPage .big-text {
+  font-size: 40px;
+  font-weight: 700;
+}
+
+.WalletPage .line {
+  max-width: 800px;
+  margin: 40px 0 20px;
+}
+
+.WalletPage .small-text {
+  max-width: 700px;
+  text-align: center;
+}
+
+.WalletPage input {
+  max-width: 400px;
+  margin-top: 60px;
+  text-align: center;
+}
+
+.WalletPage button {
+  max-width: 400px;
+  margin-top: 25px;
+}
+
+.WalletPage .bill-cont {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-top: 20px;
+  height: 45px;
+  width: fit-content;
+  padding: 0 30px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+}
+.WalletPage .bill-cont i {
+  font-size: 20px;
+}
+
+.WalletPage .bill-cont p {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+@media screen and (max-width: 700px) {
+  .WalletPage {
+    padding-top: 60px;
+  }
+  .WalletPage .big-text {
+    text-align: center;
+    font-size: 30px;
+  }
+  .WalletPage .bill-cont {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+    height: 50px;
+  }
+}

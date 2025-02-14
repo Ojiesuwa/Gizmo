@@ -1,0 +1,92 @@
+.CreateProjectModal {
+  position: fixed;
+  height: 100svh;
+  width: 100vw;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.2);
+  z-index: 300;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 20px;
+}
+
+.CreateProjectModal .main-container {
+  width: 100%;
+  height: fit-content;
+
+  max-width: 400px;
+  background-color: var(--background-color);
+  border: 1px solid var(--stroke-color);
+  border-radius: 10px;
+  padding: 20px 20px 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.CreateProjectModal .main-container .header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: fit-content;
+  border-bottom: 1px solid var(--stroke-color);
+  flex-shrink: 0;
+  padding-bottom: 15px;
+}
+
+.CreateProjectModal .main-container .body {
+  height: 100%;
+}
+
+.CreateProjectModal .main-container .footer {
+  flex-shrink: 0;
+}
+
+.CreateProjectModal .fund-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 50px;
+  border: 1px solid var(--stroke-color);
+  margin-top: 15px;
+  margin-bottom: 15px;
+  border-radius: 15px;
+  padding: 0 15px;
+}
+
+.CreateProjectModal .wallet {
+  font-weight: 500;
+  font-size: 14px;
+}
+.CreateProjectModal .fund {
+  font-size: 14px;
+  font-weight: 500;
+  opacity: 0.6;
+}
+
+.CreateProjectModal .bill-item {
+  font-size: 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.CreateProjectModal .bill-item .left p {
+  font-weight: 500;
+}
+
+.CreateProjectModal .total-item {
+  border-top: 1px solid var(--stroke-color);
+  margin-top: 25px;
+  display: flex;
+  align-items: center;
+  height: 55px;
+}
+
+.fa-circle-xmark:hover {
+  color: red;
+  opacity: 0.7;
+  cursor: pointer;
+}
