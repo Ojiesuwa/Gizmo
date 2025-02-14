@@ -18,6 +18,7 @@ import AccountPage from "./pages/AccountPage/AccountPage";
 import ComplaintPage from "./pages/ComplaintPage/ComplaintPage";
 
 function App() {
+
   return (
     <div className="App">
       <BrowserRouter>

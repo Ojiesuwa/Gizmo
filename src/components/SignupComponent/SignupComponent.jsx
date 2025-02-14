@@ -53,7 +53,8 @@ const SignupComponent = ({ handleAuthTypeChange }) => {
         password,
         school: school === "others" ? customSchool : school,
       });
-      toast("Account Successfully created");
+      toast.success("Account Successfully created");
+      toast.success("You have been gifted N300");
       return navigate(navigation.homePage.base);
     } catch (error) {
       console.error(error);

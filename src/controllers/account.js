@@ -26,7 +26,7 @@ export const createNewUser = ({
         createdAt: new Date(),
         xp: 0,
         subscription: "inactive",
-        wallet: 0,
+        wallet: 300,
         theme: "dark",
       });
 
