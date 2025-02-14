@@ -27,6 +27,7 @@ export const createNewUser = ({
         xp: 0,
         subscription: "inactive",
         wallet: 0,
+        theme: "dark",
       });
 
       resolve();

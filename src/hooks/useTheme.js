@@ -13,8 +13,26 @@ const useTheme = () => {
 
   useEffect(() => {
     if (!userCredential) return;
-    setTheme(accountDetail?.theme);
+    setTheme(accountDetail?.theme || "dark");
     localStorage.setItem("theme", accountDetail?.theme || "light");
+    const root = document.documentElement;
+    const themeVariables = [
+      { variable: "--background-color", light: "#fff", dark: "#121212" },
+      { variable: "--text-color", light: "#222", dark: "#ddd" },
+      {
+        variable: "--toastify-color-progress-dark",
+        light: "green",
+        dark: "#4caf50",
+      },
+      { variable: "--reset-btn-bg", light: "#555", dark: "#bbb" },
+      { variable: "--stroke-color", light: "#aaa", dark: "#555" },
+      { variable: "--sidebar-background", light: "#f8f8f8", dark: "#1e1e1e" },
+      { variable: "--button-color", light: "#222", dark: "#ddd" },
+    ];
+
+    themeVariables.forEach(({ variable, light, dark }) => {
+      root.style.setProperty(variable, theme === "dark" ? dark : light);
+    });
   }, [accountDetail]);
 
   useEffect(() => {
