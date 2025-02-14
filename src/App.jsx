@@ -16,9 +16,9 @@ import ProjectListPage from "./pages/ProjectListPage/ProjectListPage";
 import UnderDevelopmentPage from "./pages/UnderDevelopmentPage/UnderDevelopmentPage";
 import AccountPage from "./pages/AccountPage/AccountPage";
 import ComplaintPage from "./pages/ComplaintPage/ComplaintPage";
+import LeaderBoardPage from "./pages/LeaderBoardPage/LeaderBoardPage";
 
 function App() {
-
   return (
     <div className="App">
       <BrowserRouter>
@@ -34,6 +34,10 @@ function App() {
             <Route
               path={navigation.homePage.dynamic}
               element={<CreateQuizPage />}
+            />
+            <Route
+              path={navigation.leaderBoardPage.dynamic}
+              element={<LeaderBoardPage />}
             />
             <Route
               path={navigation.lecturePage.dynamic}

@@ -1,0 +1,100 @@
+.LeaderBoardPage {
+  width: 100%;
+  height: 100%;
+  padding: 40px 30px 20px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+}
+
+.LeaderBoardPage .big-text {
+  font-size: 40px;
+  font-weight: 700;
+}
+
+.LeaderBoardPage .leader-board {
+  width: 100%;
+  max-width: 800px;
+  height: fit-content;
+  border: 1px solid var(--stroke-color);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.LeaderBoardPage .title {
+  width: 100%;
+  background-color: var(--stroke-color);
+}
+
+.LeaderBoardPage .board-item {
+  width: 100%;
+  height: 50px;
+  display: flex;
+  padding: 0 30px;
+}
+
+.LeaderBoardPage .board-item > * {
+  width: 25%;
+  height: 100%;
+  align-items: center;
+  display: flex;
+  border-right: 1px solid var(--text-color);
+  justify-content: center;
+}
+
+.LeaderBoardPage .board-item p {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.LeaderBoardPage .board-item > *:last-child {
+  border-right: 0;
+}
+
+.LeaderBoardPage .name-cont {
+  width: 40%;
+  justify-content: flex-start;
+}
+
+.LeaderBoardPage .xp-cont {
+}
+
+.LeaderBoardPage .main {
+  height: 100%;
+  width: 100%;
+  overflow-y: auto;
+}
+
+.LeaderBoardPage .main .board-item {
+  border-bottom: 1px solid var(--stroke-color);
+  height: 55px;
+}
+.LeaderBoardPage .main .board-item:last-child {
+  border-bottom: 0;
+}
+
+.LeaderBoardPage .main::-webkit-scrollbar {
+  display: none;
+}
+
+@media screen and (max-width: 700px) {
+  .LeaderBoardPage {
+    padding: 60px 20px 20px;
+  }
+
+  .LeaderBoardPage .big-text {
+    text-align: center;
+  }
+
+  .LeaderBoardPage .board-item {
+    padding: 0 10px;
+  }
+
+  .LeaderBoardPage .board-item > * {
+    overflow: hidden;
+    overflow-x: scroll;
+  }
+}

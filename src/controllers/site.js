@@ -6,7 +6,7 @@ export const fetchAllSchools = () => {
     try {
       const data = await getDocumentById("Site", "schools");
 
-      resolve(data);
+      resolve({ schools: data.schools.sort((a, b) => a.localeCompare(b)) });
     } catch (error) {
       console.error(error);
       reject(error);
