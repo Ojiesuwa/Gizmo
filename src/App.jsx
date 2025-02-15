@@ -17,6 +17,8 @@ import UnderDevelopmentPage from "./pages/UnderDevelopmentPage/UnderDevelopmentP
 import AccountPage from "./pages/AccountPage/AccountPage";
 import ComplaintPage from "./pages/ComplaintPage/ComplaintPage";
 import LeaderBoardPage from "./pages/LeaderBoardPage/LeaderBoardPage";
+import { useEffect } from "react";
+import promptChatGpt from "./components/promptChatGpt";
 
 function App() {
   return (

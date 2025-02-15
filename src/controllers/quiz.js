@@ -10,7 +10,7 @@ import {
 } from "../utils/array";
 
 const generateQuizPerChunk = (chunk) => {
-  return new Promise((resolve, reject) => {
+  return new Promise(async(resolve, reject) => {
     try {
       resolve([
         {
