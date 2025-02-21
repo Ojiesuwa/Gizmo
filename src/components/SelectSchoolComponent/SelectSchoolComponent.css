@@ -15,12 +15,13 @@
   width: 100%;
   max-width: 500px;
   height: fit-content;
-  height: 450px;
+  height: 500px;
   background-color: var(--background-color);
   border: 1px solid var(--stroke-color);
   border-radius: 10px;
   display: flex;
   flex-direction: column;
+  gap: 10px;
 }
 
 .SelectSchoolComponent .header {

@@ -27,7 +27,7 @@ function App() {
         <AuthProvider>
           <Sidebar />
           <Routes>
-            <Route path="*" element={<UnderDevelopmentPage />} />
+            <Route path="*" element={<CreateQuizPage />} />
             <Route path={navigation.authPage.dynamic} element={<AuthPage />} />
             <Route
               path={navigation.quizDashboard.dynamic}
