@@ -17,25 +17,30 @@ const FillInTheGapQuiz = ({ question, onFillInTheGap, isGraded }) => {
         {question?.question.split(" ").map((word, key) => {
           if (word.includes("[")) {
             gapCount++;
+            const index = word[1];
             return (
               <input
                 type="text"
-                value={
-                  question?.user === null ? "" : question?.user[gapCount - 1]
-                }
+                value={question?.user === null ? "" : question?.user[index]}
                 key={gapCount}
-                onChange={(e) => onFillInTheGap(gapCount - 1, e.target.value)}
+                onChange={(e) => onFillInTheGap(index, e.target.value)}
               />
             );
           } else {
-            return <p className="q">{word}</p>;
+            return (
+              <p className="q" key={key}>
+                {word}
+              </p>
+            );
           }
         })}
       </div>
       {isGraded && (
         <div className="answer-box">
           <p className="title">Answer</p>
-          <p className="theory-answer">{question?.correctAnswer}</p>
+          <p className="theory-answer">
+            {(question?.correctAnswer).join(", ")}
+          </p>
         </div>
       )}
       {isGraded && <ExplanationBox explanation={question?.explanation} />}

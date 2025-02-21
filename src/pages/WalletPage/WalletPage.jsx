@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./WalletPage.css";
 import { toast } from "react-toastify";
 import { fundAccountWallet } from "../../controllers/account";
 import useAuth from "../../hooks/useAuth";
 import Button from "../../components/Button/Button";
+import { payWithPaystack } from "../../paystack/payWithPayStack";
 
 const WalletPage = () => {
   // Hooks
@@ -20,8 +21,18 @@ const WalletPage = () => {
       if (!userCredential) return;
 
       setIsLoading(true);
-      await fundAccountWallet(userCredential?.uid, amount);
-      toast.success("Wallet succesfully funded!");
+      payWithPaystack(
+        accountDetail.email,
+        amount,
+        async () => {
+          await fundAccountWallet(userCredential?.uid, amount);
+          toast.success("Wallet succesfully funded!");
+        },
+        () => {
+          setIsLoading(false);
+          toast("Payment closed");
+        }
+      );
     } catch (error) {
       console.error(error);
       toast.error("Error funding wallet");
@@ -29,6 +40,18 @@ const WalletPage = () => {
       setIsLoading(false);
     }
   };
+
+  useEffect(() => {
+    const script = document.createElement("script");
+    script.src = "https://js.paystack.co/v1/inline.js";
+    script.async = true;
+    document.body.appendChild(script);
+
+    return () => {
+      document.body.removeChild(script);
+    };
+  }, []);
+
   return (
     <div className="WalletPage fade">
       <p className="big-text">We are glad</p>

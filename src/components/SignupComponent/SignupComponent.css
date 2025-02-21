@@ -1,3 +1,26 @@
-.SignupComponent{
-  
+.SignupComponent {
+}
+
+.SignupComponent .school-cont {
+  height: 45px;
+  width: 100%;
+  border: 1px solid var(--text-color);
+  border-radius: 6px;
+  padding: 0 15px;
+  background-color: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.SignupComponent .school-cont p {
+  font-size: 13px;
+}
+
+.SignupComponent .school-cont i {
+  font-size: 14px;
 }

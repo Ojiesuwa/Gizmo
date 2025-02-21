@@ -8,6 +8,8 @@ import { useNavigate } from "react-router-dom";
 import { navigation } from "../../site/navigation";
 import { addNewSchool, fetchAllSchools } from "../../controllers/site";
 import useTheme from "../../hooks/useTheme";
+import SelectSchoolComponent from "../SelectSchoolComponent/SelectSchoolComponent";
+import "./SignupComponent.css";
 
 const SignupComponent = ({ handleAuthTypeChange }) => {
   // Auth hooks
@@ -25,6 +27,8 @@ const SignupComponent = ({ handleAuthTypeChange }) => {
     customSchool: undefined,
   });
   const [isLoading, setIsLoading] = useState(false);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
   const handleSignup = async () => {
     try {
       setIsLoading(true);
@@ -85,7 +89,7 @@ const SignupComponent = ({ handleAuthTypeChange }) => {
     handleFetchAllSchools();
   }, []);
   return (
-    <div className="RegistrationComponent fade">
+    <div className="SignupComponent RegistrationComponent fade">
       <div className="image-container">
         <img src={theme === "light" ? DarkLogo : LightLogo} alt="" />
       </div>
@@ -146,37 +150,10 @@ const SignupComponent = ({ handleAuthTypeChange }) => {
             setUserEntry((p) => ({ ...p, password: e.target.value }))
           }
         />
-
-        {/* School Section */}
-        <select
-          name=""
-          id=""
-          value={userEntry.school}
-          onChange={(e) =>
-            setUserEntry((p) => ({ ...p, school: e.target.value }))
-          }
-        >
-          <option value="" disabled selected>
-            Select School
-          </option>
-          {allSchools.map((data, index) => (
-            <option value={data} key={index}>
-              {data}
-            </option>
-          ))}
-          <option value="others">others</option>
-        </select>
-
-        {userEntry.school === "others" && (
-          <input
-            type="text"
-            placeholder="Enter school name here"
-            value={userEntry.customSchool}
-            onChange={(e) =>
-              setUserEntry((p) => ({ ...p, customSchool: e.target.value }))
-            }
-          />
-        )}
+        <div className="school-cont" onClick={() => setIsModalVisible(true)}>
+          <p>{userEntry.school || "Click to select school"}</p>
+          <i className="fa-light fa-school"></i>
+        </div>
       </div>
       <div className="auth-action-cont">
         <Button text={"Signup"} onClick={handleSignup} isLoading={isLoading} />
@@ -186,6 +163,11 @@ const SignupComponent = ({ handleAuthTypeChange }) => {
           Click here to login
         </p>
       </div>
+      <SelectSchoolComponent
+        isVisible={isModalVisible}
+        onHide={() => setIsModalVisible(false)}
+        onSelect={(school) => setUserEntry((p) => ({ ...p, school }))}
+      />
     </div>
   );
 };

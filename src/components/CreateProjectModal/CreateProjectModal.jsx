@@ -9,6 +9,7 @@ const CreateProjectModal = ({
   isVisible,
   onHide,
   isGenerating,
+  projectButtonText
 }) => {
   const { accountDetail } = useAuth() || {};
 
@@ -69,7 +70,7 @@ const CreateProjectModal = ({
           <Button
             text={`Create Project (+${xp}XP)`}
             isLoading={isGenerating}
-            loadingText={"Generating Your Project"}
+            loadingText={projectButtonText || "Generating Your Project"}
             onClick={() => OnCreate(xp, totalCost)}
             disabled={
               totalCost >

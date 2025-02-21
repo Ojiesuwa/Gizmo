@@ -37,6 +37,8 @@ const QuizViewPage = () => {
   const [timeSpent, setTimeSpent] = useState(0);
   const [isTimeElapsed, setIsTimeElapsed] = useState(false);
 
+  console.log(quiz);
+
   const timerLimit = !project
     ? 0
     : calculateTimeFromExpectedDuration(project?.expectedDuration);
@@ -198,6 +200,7 @@ const QuizViewPage = () => {
   useEffect(() => {
     if (project?.progress !== 200) return;
     if (isTimeElapsed) return;
+    if (!project?.timer) return;
     const notificationTime = [
       { mark: 3600, message: "You have 1 hour left" },
       { mark: 1800, message: "You have 30 minutes left" },

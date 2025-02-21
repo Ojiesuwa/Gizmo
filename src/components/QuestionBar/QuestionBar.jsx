@@ -3,16 +3,26 @@ import "./QuestionBar.css";
 import MiniLoader from "../MiniLoader/MiniLoader";
 import { toast } from "react-toastify";
 import { generateAnswerToQuizQuestion } from "../../controllers/quiz";
+import useAuth from "../../hooks/useAuth";
 
 const QuestionBar = ({ isVisible, explantion, onHide }) => {
+  const { accountDetail } = useAuth() || {};
   const [isLoading, setIsLoading] = useState(false);
   const [text, setText] = useState("");
   const [response, setResponse] = useState("");
 
   const handleAskQuestion = async () => {
     try {
+      if (!accountDetail) return;
+      if(!explantion) return;
+      console.log(explantion);
+      
       setIsLoading(true);
-      const res = await generateAnswerToQuizQuestion(text, explantion);
+      const res = await generateAnswerToQuizQuestion(
+        text,
+        explantion,
+        accountDetail.firstname
+      );
 
       setResponse(res);
     } catch (error) {

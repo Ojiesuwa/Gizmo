@@ -57,8 +57,10 @@ const QuizDashboard = () => {
 
       document.title = `Dashboard - ${projectDb.title}`;
 
-      const explanationDb = await fetchExplanation(projectDb.lectureId);
-
+      let explanationDb = null;
+      if (projectDb?.explanation) {
+        explanationDb = await fetchExplanation(projectDb.lectureId);
+      }
       const quizDb = await fetchQuiz(
         projectDb.history[projectDb.history.length - 1]
       );
@@ -118,7 +120,7 @@ const QuizDashboard = () => {
       setIsLoading(true);
       const quizDb = await fetchQuizDb(project?.quizDbId);
       console.log(quizDb);
-      const quiz = generateQuizFromDb({ quizDb });
+      const quiz = generateQuizFromDb({ quizDb, project: project });
       console.log(quiz, quizDb, project);
 
       await updateQuiz(quiz, project?.history[0]);
@@ -161,27 +163,29 @@ const QuizDashboard = () => {
         </div>
       </div>
       <div className="quiz-body">
-        <div
-          className={
-            "quiz-section " +
-            (project?.progress >= 0 ? "done-section" : "not-done-section")
-          }
-          onClick={handleClickLecture}
-        >
-          <div className={"section-header "}>
-            <p className="heading-4">Stage One: Lecture Phase</p>
-            <div className="line"></div>
+        {project?.explanation && (
+          <div
+            className={
+              "quiz-section " +
+              (project?.progress >= 0 ? "done-section" : "not-done-section")
+            }
+            onClick={handleClickLecture}
+          >
+            <div className={"section-header "}>
+              <p className="heading-4">Stage One: Lecture Phase</p>
+              <div className="line"></div>
+            </div>
+            <div className="section-content">
+              {explanation?.map((data, index) => (
+                <div className="section-wrapper" key={index}>
+                  <div className="line"></div>
+                  <i className="fa-light fa-square-plus"></i>
+                  <p>{data.topic}</p>
+                </div>
+              ))}
+            </div>
           </div>
-          <div className="section-content">
-            {explanation?.map((data, index) => (
-              <div className="section-wrapper" key={index}>
-                <div className="line"></div>
-                <i className="fa-light fa-square-plus"></i>
-                <p>{data.topic}</p>
-              </div>
-            ))}
-          </div>
-        </div>
+        )}
         <div
           className={
             "quiz-section " +
@@ -190,7 +194,9 @@ const QuizDashboard = () => {
           onClick={handleClickQuiz}
         >
           <div className="section-header">
-            <p className="heading-4">Stage Two: Quiz Phase</p>
+            <p className="heading-4">
+              Stage {project?.explanation ? "Two" : "One"}: Quiz Phase
+            </p>
             <div className="line"></div>
           </div>
           <div className="section-content">
@@ -221,7 +227,9 @@ const QuizDashboard = () => {
           onClick={handleClickGrade}
         >
           <div className="section-header">
-            <p className="heading-4">Stage Three: Grading Phase</p>
+            <p className="heading-4">
+              Stage {project?.explanation ? "Three" : "Two"}: Grading Phase
+            </p>
             <div className="line"></div>
           </div>
           <div className="section-content">

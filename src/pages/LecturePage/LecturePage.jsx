@@ -297,11 +297,15 @@ const LecturePage = () => {
         handleAskQuestion();
       }
       if (event.code === "ArrowLeft" && hasIntroduced) {
+        if (isQuestioning) return;
         responsiveVoice.cancel();
         setIsPlaying(false);
         handleChangeToPreviousTopic();
       }
       if (event.code === "ArrowRight" && hasIntroduced) {
+        if (isQuestioning) return;
+        responsiveVoice.cancel();
+        setIsPlaying(false);
         handleChangeToNextTopic();
       }
     };
@@ -380,7 +384,11 @@ const LecturePage = () => {
         )}
       </div>
       {isLoading && <PageLoader />}
-      <QuestionBar isVisible={isQuestioning} onHide={handleHideQuestionBar} />
+      <QuestionBar
+        isVisible={isQuestioning}
+        onHide={handleHideQuestionBar}
+        explantion={explanation[explanationIndex]?.explanation}
+      />
     </div>
   );
 };
@@ -462,7 +470,13 @@ const LectureScreen = ({
         </div>
       </div>
       <div className="main-text-wrapper" ref={lectureRef}>
-        <p>{explanation?.explanation}</p>
+        <p>
+          {explanation?.explanation
+            .split("**")
+            .map((text, index) =>
+              index % 2 === 1 ? <strong key={index}>{text}</strong> : text
+            )}
+        </p>
         <div className="hand-wrapper" onClick={handleAskQuestion}>
           <i className="fa-light fa-hand"></i>
         </div>

@@ -39,7 +39,7 @@ const LeaderBoardPage = () => {
   }, [userCredential, accountDetail]);
   return (
     <div className="LeaderBoardPage">
-      <p className="big-text">Bells University Leaderboard</p>
+      <p className="big-text">{accountDetail?.school} Leaderboard</p>
       <div className="leader-board">
         <div className="title">
           <div className="board-item">

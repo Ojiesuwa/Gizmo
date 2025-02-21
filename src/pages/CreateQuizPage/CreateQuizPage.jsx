@@ -50,6 +50,7 @@ const CreateQuizPage = () => {
   const [pdfPages, setPdfPages] = useState(0);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isNameValid, setIsNameValid] = useState(false);
+  const [projectButtonText, setProjectButtonText] = useState("Loading");
 
   //console.log(projectParameter);
 
@@ -92,13 +93,15 @@ const CreateQuizPage = () => {
       const projectId = await createNewProject(
         projectParameter,
         addedFile,
-        userCredential.uid
+        userCredential.uid,
+        (text) => {
+          setProjectButtonText(text);
+        }
       );
       await debitAccountWallet(userCredential?.uid, cost);
       await increaseAccountXp(userCredential?.uid, xp);
 
       navigate(navigation.quizDashboard.base + "/" + projectId);
-      
     } catch (error) {
       console.error(error);
       if (error.message.includes("small-text")) {
@@ -411,6 +414,7 @@ const CreateQuizPage = () => {
         onHide={() => setIsModalVisible(false)}
         OnCreate={generateNewProject}
         isGenerating={isGenerating}
+        projectButtonText={projectButtonText}
       />
     </div>
   );

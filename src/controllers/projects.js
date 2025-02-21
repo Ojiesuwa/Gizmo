@@ -18,6 +18,7 @@ import { extractText } from "../utils/pdfExtractor";
 import { splitText } from "../utils/splitText";
 import { generateExplanation, uploadExplanation } from "./explanation";
 import {
+  formatQuizTopic,
   generateQuizDb,
   generateQuizFromDb,
   uploadQuiz,
@@ -26,9 +27,15 @@ import {
 import { db } from "../firebase/config";
 import { error } from "pdf-lib";
 
-export const createNewProject = (projectParameters, pdfBlob, uid) => {
+export const createNewProject = (
+  projectParameters,
+  pdfBlob,
+  uid,
+  cb = () => {}
+) => {
   return new Promise(async (resolve, reject) => {
     try {
+      cb("Extracting text from pdf");
       // Extract the text
       const pdfText = await extractText(
         pdfBlob,
@@ -43,36 +50,51 @@ export const createNewProject = (projectParameters, pdfBlob, uid) => {
       // Split text
       const cluster = splitText(pdfText, projectParameters?.numberOfQuestions);
 
+      cb("Generating a quiz database");
       // Create Quiz Database
       const quizDatabase = await generateQuizDb({ cluster });
 
-      // Create Lecture
-      const lecture = await generateExplanation({ quizDb: quizDatabase });
+      const formattedQuizDatabase = await formatQuizTopic({
+        quizDb: quizDatabase,
+      });
+
+      let lectureId = null;
+
+      if (projectParameters.explanation) {
+        cb("Generating project explanation");
+        // Create Lecture
+        const lecture = await generateExplanation({
+          quizDb: formattedQuizDatabase,
+        });
+
+        // Upload Lecture to firebase and deduce id
+        lectureId = await uploadExplanation({ lecture });
+      }
+
       //console.log(lecture);
 
+      cb("Uploading project to cloud");
       // Upload QuizDb to firebase and deduct id
-      const quizDbId = await uploadQuizDb({ quizDb: quizDatabase });
-
-      // Upload Lecture to firebase and deduce id
-
-      const lectureId = await uploadExplanation({ lecture });
+      const quizDbId = await uploadQuizDb({ quizDb: formattedQuizDatabase });
 
       //console.log(lectureId, quizDbId);
 
       // Create Quiz
-      const quiz = generateQuizFromDb({ quizDb: quizDatabase });
-      //console.log(quiz);
+      const quiz = generateQuizFromDb({
+        quizDb: formattedQuizDatabase,
+        project: projectParameters,
+      });
 
       // Upload and extract quiz id
       const quizId = await uploadQuiz({ quiz });
 
       // Create Payload
       const payload = {
-        lectureId,
+        lectureId: lectureId || "",
         quizDbId,
         uid,
         createdAt: new Date(),
-        progress: 0,
+        progress: projectParameters.explanation ? 0 : 200,
         history: [quizId],
         ...projectParameters,
       };

@@ -1,3 +1,5 @@
+import { newlineChars } from "pdf-lib";
+import promptChatGpt from "../components/promptChatGpt";
 import {
   addDocument,
   getDocumentById,
@@ -10,39 +12,87 @@ import {
 } from "../utils/array";
 
 const generateQuizPerChunk = (chunk) => {
-  return new Promise(async(resolve, reject) => {
+  return new Promise(async (resolve, reject) => {
     try {
-      resolve([
+      const prompt = `
+      An piece of text will  be supplied to you below. Using this information generate me an array containing three types of questions as an object.
+
+      PS: The number of missing gaps in the fig type could range between 1 - 3, Use the same topic for all the questions. The mcq wrong options and correct answer should be one word or two words only 
+
+      Your response should take the following format:
+      [
         {
-          type: "mcq",
-          question:
-            "An object with a mass of 10 kg is at rest. What force is required to accelerate it at 3 m/s²?",
-          wrongOptions: ["20 N", "15 N", "70 N", "100 N"],
-          correctAnswer: "30 N",
-          topic: "Mass and forces",
-          explanation:
-            "Newton's Second Law states that force is the product of mass and acceleration (F = ma). Here, the mass is 10 kg, and the acceleration is 3 m/s². Multiplying them gives 30 N, which is the force required to overcome inertia and accelerate the object as specified.",
+          "type": "mcq",
+
+          "question":"A short multiple choice question of about 20 words",
+
+          "wrongOptions": ["Wrong Answer 1", "Wrong Answer 2", "Wrong Answer 3", "Wrong Answer 4"],
+
+          "correctAnswer": "Correct Answer",
+
+          "topic": "Topic that best encapsulate the supplied text",
+
+          "explanation": "Write a comprehensive but brief explanation of about 50 - 100 words to explain the answer"
         },
         {
-          type: "fig",
-          question:
-            "The [0] of an object determines the amount of force needed to change its motion, as described by Newton's First Law.",
-          correctAnswer: ["inertia"],
-          topic: "Newton's law",
-          explanation:
-            "Inertia refers to the resistance of an object to changes in its state of motion or rest. Newton's First Law explains that without an external force, an object will not change its motion, highlighting the role of inertia in maintaining its current state.",
+          "type": "fig",
+
+          "question":
+            "Write a short fill in the gap question of about 15 - 30 words, an example is given as thus. The [0] of an object determines the amount of [1] needed to change its motion, as described by Newton's First Law.",
+
+          "correctAnswer": "Return an array corresponding to the index in the question, an example to the question above is:  ["inertia", "force"] ",
+
+          "topic": "Use the same topic as the mcq topic",
+
+          "explanation":
+            "Write a comprehensive but brief explanation of about 50 - 100 words to explain the answer",
         },
+
         {
-          type: "theory",
-          question:
-            "Explain Newton's Second Law of Motion and its importance in understanding force and acceleration.",
-          correctAnswer:
-            "Newton's Second Law of Motion states that the force acting on an object is equal to the mass of the object multiplied by its acceleration (F = ma). It explains how forces cause changes in motion and is essential for analyzing dynamic systems.",
-          topic: "Acceleration",
-          explanation:
-            "Newton's Second Law establishes the relationship between force, mass, and acceleration. It shows that larger forces produce greater accelerations for a given mass and allows scientists and engineers to predict and analyze motion in various practical situations, from vehicle dynamics to space exploration.",
+          "type": "theory",
+
+          "question":
+            "Write an expressive question that is somewhere between 20 - 30 words",
+
+          "correctAnswer":
+            "Write the answer to the theory question here",
+          "topic": "Use the general topic for this text",
+
+          "explanation":
+            "Write a comprehensive but brief explanation of about 50 - 100 words to explain the answer",
         },
-      ]);
+      ]
+
+      Supplied Text: ${chunk}
+      `;
+
+      let attempt = 0;
+      let retries = 5;
+
+      while (attempt < retries) {
+        const res = await promptChatGpt(
+          "Generate a JSON array , Do not format in markdown. Cross check for '}' and '{'",
+          prompt
+        );
+        console.log("Chunk", chunk);
+        console.log("Prompt", prompt);
+        console.log("attempt", attempt);
+
+        try {
+          const data = JSON.parse(res);
+          console.log("data", data);
+          resolve(data);
+          break;
+        } catch (error) {
+          console.log(res);
+
+          console.log("Fatal error");
+          console.warn(error.message);
+        }
+        attempt++;
+      }
+
+      throw new Error("Can't generate");
     } catch (error) {
       console.error(error);
       reject(error);
@@ -58,6 +108,8 @@ export const generateQuizDb = ({ cluster }) => {
       );
 
       const generatedQuiz = await Promise.all(generatedQuizPromise);
+
+      console.log(generatedQuiz);
 
       resolve(generatedQuiz);
     } catch (error) {
@@ -95,12 +147,14 @@ export const fetchQuizDb = (quizDbId) => {
   });
 };
 
-export const generateQuizFromDb = ({ quizDb }) => {
+export const generateQuizFromDb = ({ quizDb, project }) => {
   try {
     // flatten Array
     const flattenedQuizDB = quizDb.flat(Infinity);
     // Create array with random arrangement of numbers in index
-    const randomizedArray = getRandomIndexArray(quizDb.length);
+    const randomizedArray = getRandomIndexArray(
+      parseInt(project.numberOfQuestions)
+    );
 
     // map and attach question to array
     const quiz = randomizedArray.map((index) => ({
@@ -123,7 +177,7 @@ export const generateQuizFromDb = ({ quizDb }) => {
 
     console.log(factoredQuiz);
 
-    return factoredQuiz;
+    return factoredQuiz.flat(Infinity);
   } catch (error) {
     console.error(error);
   }
@@ -220,6 +274,7 @@ export const deduceScorePerTopic = (quiz) => {
   quiz.forEach((question) => {
     if (!topicObject[question?.topic]) {
       topicObject[question?.topic] = { score: 0, count: 0 };
+      console.log(question?.topic);
     }
     topicObject[question?.topic].score += question?.grade ? 1 : 0;
     topicObject[question?.topic].count += 1;
@@ -248,20 +303,26 @@ export const deduceScorePerQuizType = (quiz) => {
   return typeObject;
 };
 
-export const generateAnswerToQuizQuestion = (question, explanation) => {
+export const generateAnswerToQuizQuestion = (
+  question,
+  explanation,
+  firstname
+) => {
   return new Promise(async (resolve, reject) => {
     try {
-      setTimeout(() => {
-        resolve(`This principle is explained by Newton’s First Law of Motion, also known as the law of inertia. It states that an object at rest remains at rest, and an object in motion continues in motion with the same speed and in the same direction unless acted upon by an external force. This happens because objects naturally resist changes to their state of motion due to their inertia.
+      const prompt = `
+      An explanation was supplied to a student named ${firstname}. ${firstname} asked the following question "${question}". Generate an answer to ${firstname} question. If the answer is within the explantion, respond based on the explanation, else, respond based on general knowledge. Generate a response between 100 - 300 words based on neccessity. Make sure the response is personalized to ${firstname}. And try to be as clear, direct and brief as possible
 
-        For example, if you slide a book across a table, it eventually stops due to friction—an external force. In space, however, where there is little to no friction, an object would keep moving indefinitely in the same direction unless another force, like gravity or collision, interferes.
+      The explanation is given below: "${explanation}"
+      `;
+      console.log(prompt);
 
-        For example, if you slide a book across a table, it eventually stops due to friction—an external force. In space, however, where there is little to no friction, an object would keep moving indefinitely in the same direction unless another force, like gravity or collision, interferes.
-        
-        For example, if you slide a book across a table, it eventually stops due to friction—an external force. In space, however, where there is little to no friction, an object would keep moving indefinitely in the same direction unless another force, like gravity or collision, interferes.
+      const res = await promptChatGpt(
+        "Do not respond in Markdown. You are a female teacher called Olivia. Be a nice friendly and warm teacher answering a question. Don't include a conclusion stating your name",
+        prompt
+      );
 
-        In summary, motion doesn’t stop on its own; it requires an external force, which is why astronauts experience weightlessness and why seatbelts are crucial in a moving car! `);
-      }, 3000);
+      resolve(res);
     } catch (error) {
       console.error(error);
       reject(error);
@@ -269,97 +330,87 @@ export const generateAnswerToQuizQuestion = (question, explanation) => {
   });
 };
 
-// [
-//   {
-//     type: "mcq",
-//     question:
-//       "A box is placed on a smooth horizontal surface. A force of 10 N is applied to the box, causing it to accelerate at 2 m/s². What is the mass of the box?",
-//     wrongOptions: ["2kg", "10kg", "20kg"],
-//     correctAnswer: "5kg",
-//     topic: "Mass and forces",
-//   },
-//   {
-//     type: "mcq",
-//     question:
-//       "An object of mass 4 kg is accelerated by a force of 16 N. What is the acceleration of the object?",
-//     wrongOptions: ["2 m/s²", "8 m/s²", "10 m/s²"],
-//     correctAnswer: "4 m/s²",
-//     topic: "Mass and forces",
-//   },
-//   {
-//     type: "mcq",
-//     question:
-//       "A force of 25 N is applied to a 5 kg object. What will be its acceleration?",
-//     wrongOptions: ["3 m/s²", "8 m/s²", "2 m/s²"],
-//     correctAnswer: "5 m/s²",
-//     topic: "Mass and forces",
-//   },
-//   {
-//     type: "mcq",
-//     question:
-//       "An object with a mass of 10 kg is at rest. What force is required to accelerate it at 3 m/s²?",
-//     wrongOptions: ["20 N", "15 N", "30 N"],
-//     correctAnswer: "30 N",
-//     topic: "Mass and forces",
-//   },
-//   {
-//     type: "fig",
-//     question:
-//       "The force acting on an object is directly proportional to its [0] and [1], according to Newton's Second Law of Motion.",
-//     correctAnswer: ["mass", "acceleration"],
-//     topic: "Newton's law",
-//   },
-//   {
-//     type: "fig",
-//     question:
-//       "In the absence of external forces, an object will maintain its [0] and [1] as per Newton's First Law.",
-//     correctAnswer: ["state of rest", "uniform motion"],
-//     topic: "Newton's law",
-//   },
-//   {
-//     type: "fig",
-//     question:
-//       "The [0] of an object determines the amount of force needed to change its motion, as described by Newton's First Law.",
-//     correctAnswer: ["inertia"],
-//     topic: "Newton's law",
-//   },
-//   {
-//     type: "fig",
-//     question:
-//       "When a hammer strikes a nail, the nail exerts an equal and opposite [0] on the hammer. This describes Newton's [1] Law.",
-//     correctAnswer: ["force", "Third"],
-//     topic: "Newton's law",
-//   },
-//   {
-//     type: "theory",
-//     question:
-//       "Define Newton's First Law of Motion. How does it apply to objects in motion or at rest?",
-//     correctAnswer:
-//       "Newton's First Law of Motion states that an object will remain at rest or continue to move in a straight line at constant velocity unless acted upon by an external force. This law is also known as the Law of Inertia.",
-//     topic: "Newton's law",
-//   },
-//   {
-//     type: "theory",
-//     question:
-//       "Explain Newton's Second Law of Motion and its importance in understanding force and acceleration.",
-//     correctAnswer:
-//       "Newton's Second Law of Motion states that the force acting on an object is equal to the mass of the object multiplied by its acceleration (F = ma). It explains how forces cause changes in motion and is essential for analyzing dynamic systems.",
-//     topic: "Newton's law",
-//   },
-//   {
-//     type: "theory",
-//     question:
-//       "What is inertia, and how is it related to Newton's First Law of Motion?",
-//     correctAnswer:
-//       "Inertia is the tendency of an object to resist changes in its state of motion or rest. It is directly related to Newton's First Law of Motion, which states that an object will remain at rest or in uniform motion unless acted upon by an external force.",
-//     topic: "Newton's law",
-//   },
-//   {
-//     type: "theory",
-//     question:
-//       "Describe how Newton's Third Law of Motion applies to the propulsion of a rocket.",
-//     correctAnswer:
-//       "Newton's Third Law of Motion states that for every action, there is an equal and opposite reaction. In rocket propulsion, the action is the expulsion of gases out of the engine, and the reaction is the thrust that propels the rocket forward.",
-//     topic: "Newton's law",
-//   },
-// ];
+export const formatQuizTopic = ({ quizDb }) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      quizDb = quizDb.flat(Infinity);
+      let allTopics = [...new Set(quizDb.map((data) => data.topic))];
+
+      const prompt = `
+      Given an array of topics. return an object containing the shrinked topics by combining similar topics into one topic, where only highly similar phrases (not just loosely related ones) are grouped under a clear, well-defined category.some topics could have grouped variations, while others remain standalone with an empty array. Here is an example of the input and your expected output:
+
+      Input: 
+      [
+        "Effects of Climate Change on Agriculture",
+        "Impact of Climate Change on Crop Production",
+        "Influence of Climate Change on Farming",
+        "Climate Change and Food Security",
+        "Climate Change and Human Health",
+        "Health Implications of Climate Change",
+        "Climate Change and Respiratory Diseases",
+        "Climate Change and Global Economy",
+        "Economic Consequences of Climate Change",
+        "Climate Change and Job Market",
+        "Climate Change and Marine Life",
+        "Urbanization and Climate Change"
+      ]
+
+    Output:
+    {
+      "Climate Change and Agriculture": [
+        "Effects of Climate Change on Agriculture",
+        "Impact of Climate Change on Crop Production",
+        "Influence of Climate Change on Farming"
+      ],
+      "Climate Change and Food Security": [],
+      "Climate Change and Health": [
+        "Climate Change and Human Health",
+        "Health Implications of Climate Change",
+        "Climate Change and Respiratory Diseases"
+      ],
+      "Climate Change and Economy": [
+        "Climate Change and Global Economy",
+        "Economic Consequences of Climate Change",
+        "Climate Change and Job Market"
+      ],
+      "Climate Change and Marine Life": [],
+      "Urbanization and Climate Change": []
+    }
+
+    Generate a shrinked object from the following topics:
+    ${JSON.stringify(allTopics)}
+      `;
+
+      console.log(prompt);
+
+      const res = await promptChatGpt(
+        "Generate a JSON Object. Do not use mark down mode",
+        prompt
+      );
+
+      const clusteredTopics = JSON.parse(res);
+      const deduceGeneralTopic = (exTopic) => {
+        let clusterTopic = Object.keys(clusteredTopics).find((generalTopic) =>
+          clusteredTopics[generalTopic].some(
+            (exTopicInCluster) => exTopicInCluster === exTopic
+          )
+        );
+
+        clusterTopic = clusterTopic === undefined ? exTopic : clusterTopic;
+
+        return clusterTopic;
+      };
+
+      const newQuizDb = quizDb.map((question) => ({
+        ...question,
+        topic: deduceGeneralTopic(question.topic),
+      }));
+
+      console.log(newQuizDb);
+      resolve(newQuizDb);
+    } catch (error) {
+      console.error(error);
+      reject(error);
+    }
+  });
+};

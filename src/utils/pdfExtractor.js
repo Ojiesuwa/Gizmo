@@ -28,8 +28,12 @@ export async function extractText(pdfBlob, start, stop) {
       .promise;
 
     let fullText = "";
+
+    start = isNaN(start) ? 0 : parseInt(start);
+    stop = isNaN(stop) ? start + 1 : parseInt(stop);
+
     start = start < 1 ? 1 : start;
-    stop = stop  < start ? pdfDocument.numPages : stop;
+    stop = stop < start ? pdfDocument.numPages : stop;
 
     // Loop through all pages to extract text
     for (let pageNumber = start || 1; pageNumber <= stop; pageNumber++) {
