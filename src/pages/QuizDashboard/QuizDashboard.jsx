@@ -124,7 +124,7 @@ const QuizDashboard = () => {
       console.log(quiz, quizDb, project);
 
       await updateQuiz(quiz, project?.history[0]);
-      await setProjectLevel(params.id, 0);
+      await setProjectLevel(params.id, 200);
       await fetchAndUpdateState();
       toast.success("Project Reset Complete");
       toast.success("New Quiz Generated");
@@ -150,11 +150,13 @@ const QuizDashboard = () => {
           <button
             onClick={() =>
               navigate(
-                navigation.lecturePage.base +
+                (project.progress <= 100
+                  ? navigation.lecturePage.base
+                  : navigation.quizViewPage.base) +
                   "/" +
                   project.docId +
                   "/" +
-                  project.lectureId
+                  project.quizId
               )
             }
           >

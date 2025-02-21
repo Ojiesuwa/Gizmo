@@ -8,7 +8,7 @@ import {
 import { formatDate } from "../../utils/date";
 import Button from "../Button/Button";
 const AllComplaints = () => {
-  const [visible, setVisible] = useState(false);
+  const [visible, setVisible] = useState(true);
   const [complaints, setComplaints] = useState(null);
 
   const fetchUpdateComplaints = async () => {
@@ -21,8 +21,15 @@ const AllComplaints = () => {
     }
   };
 
+
   useEffect(() => {
-    fetchUpdateComplaints();
+    fetchUpdateComplaints(); // Fetch initially
+
+    const intervalRef = setInterval(() => {
+      fetchUpdateComplaints();
+    }, 4000);
+
+    return () => clearInterval(intervalRef); // Cleanup on unmount
   }, []);
 
   return (
@@ -40,8 +47,12 @@ const AllComplaints = () => {
           onClick={() => setVisible((p) => !p)}
         ></i>
       )}
-      <div className="header">
+      <div className="header flex items-center justify-between">
         <p className="heading-4">Address Complaint</p>
+        <i
+          className="fa-light fa-arrow-rotate-left c-pointer"
+          onClick={fetchAllComplaints}
+        ></i>
       </div>
       <div className="main">
         {complaints?.map((data, index) => (
@@ -80,7 +91,11 @@ const MasterComplaintItem = ({ data, handleRefresh }) => {
     setText(data.response);
   }, [data]);
   return (
-    <div className={`master-c-item ${data?.response ? "responded" : "not-responded"}`}>
+    <div
+      className={`master-c-item ${
+        data?.response ? "responded" : "not-responded"
+      }`}
+    >
       <div className="user-cont">
         <p>
           <b>Name: </b>

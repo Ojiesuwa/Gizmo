@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import "./QuizViewPage.css";
 import TheoryQuiz from "../../components/TheoryQuiz/TheoryQuiz";
 import ObjectiveQuiz from "../../components/ObjectiveQuiz/ObjectiveQuiz";
@@ -25,6 +25,9 @@ const QuizViewPage = () => {
   const params = useParams();
   const navigate = useNavigate();
 
+  // Timer Logic (Use useRef to avoid multiple intervals)
+  const intervalRef = useRef(null);
+
   const [project, setProject] = useState(null);
   const [quiz, setQuiz] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -50,6 +53,7 @@ const QuizViewPage = () => {
   const handleFetchAndUpdateState = async () => {
     try {
       setIsFetching(true);
+
       // Fetch project
       const projectDb = await fetchAndVerifyProject(
         params.projectId,
@@ -57,7 +61,8 @@ const QuizViewPage = () => {
       );
 
       const quizId = projectDb.history[projectDb.history.length - 1];
-      //  verify explanation id
+
+      // Verify explanation id
       if (params.quizId !== quizId) {
         throw new Error("Not User Explanation");
       }
@@ -66,34 +71,39 @@ const QuizViewPage = () => {
 
       // Fetch Quiz
       const quizDb = await fetchQuiz(quizId);
-      console.log(quizDb);
+
+      if (!quizDb) throw new Error("Quiz data not found");
 
       if (projectDb?.progress < 200) {
         setProjectLevel(params?.projectId, 200);
       }
 
-      // Update project and Quiz
+      // Update project and Quiz only after both are fetched successfully
       setQuiz(quizDb);
       setProject(projectDb);
       setIsLoading(false);
       setQuizIndex(0);
 
-      setInterval(() => {
-        // Stop counting once we've reached the expected time limit
+      if (projectDb.timer) {
+        intervalRef.current = setInterval(() => {
+          const expectedDuration = calculateTimeFromExpectedDuration(
+            projectDb?.expectedDuration
+          );
 
-        const expectedDuration = calculateTimeFromExpectedDuration(
-          projectDb?.expectedDuration
-        );
-        if (timeSpent > expectedDuration) return;
-        // Increase by one every one second
-        if (projectDb.timer)
-          setTimeSpent((p) => {
-            const timeSpent = p + 1;
-            return timeSpent;
+          setTimeSpent((prev) => {
+            if (prev >= expectedDuration) {
+              clearInterval(intervalRef.current); // Stop interval when time is exceeded
+              return prev;
+            }
+            return prev + 1;
           });
-      }, 1000);
+        }, 1000);
+      }
+
+      // Cleanup function to clear interval when component unmounts
+      return () => clearInterval(intervalRef.current);
     } catch (error) {
-      console.error(error);
+      console.error("Error in handleFetchAndUpdateState:", error);
       toast.error("Error loading project");
       navigate("/");
     } finally {

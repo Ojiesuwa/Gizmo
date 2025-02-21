@@ -240,7 +240,25 @@ const markQuestion = (question) => {
           resolve(false);
         }
       } else {
-        resolve(false);
+        const userPrompt = `
+        Question: "${question.question}",
+        Correct Answer: "${question.correctAnswer}"
+
+        Student answer: "${question.user}".
+
+        compare the student answer to the correct answer and deduce the percentage similarity in integer only
+        return an object in this form {percentageSimilarity: 40}
+        `;
+
+        console.log(userPrompt);
+
+        const res = await promptChatGpt(
+          "Do not respond in markdown format. Respond with JSON",
+          userPrompt
+        );
+        console.log(res);
+
+        resolve(parseInt(JSON.parse(res).percentageSimilarity) > 50);
       }
     } catch (error) {
       console.error(error);

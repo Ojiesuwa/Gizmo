@@ -47,7 +47,7 @@ export const fetchAllComplaints = () => {
     try {
       const colRef = collection(db, "Complaint");
       const q = query(colRef, orderBy("createdAt", "desc"));
-      const snapshot = await getDocs(colRef);
+      const snapshot = await getDocs(q);
       resolve(parseCollectionData(snapshot));
     } catch (error) {
       console.error(error);
@@ -60,7 +60,7 @@ export const respondToComplaint = (response, complaintId) => {
   return new Promise(async (resolve, reject) => {
     try {
       await updateDocumentById("Complaint", complaintId, { response });
-      resolve()
+      resolve();
     } catch (error) {
       console.error(error);
       reject(error);
