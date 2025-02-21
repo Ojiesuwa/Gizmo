@@ -45,6 +45,10 @@ const ComplaintPage = () => {
   };
 
   useEffect(() => {
+    document.title = "Make Complaint";
+  }, []);
+
+  useEffect(() => {
     if (!userCredential) return;
     fetchUpdateUserComplaint();
   }, [userCredential]);

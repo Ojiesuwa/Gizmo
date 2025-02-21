@@ -37,6 +37,10 @@ const LeaderBoardPage = () => {
     if (!userCredential || !accountDetail) return;
     fetchAndUpdateRanking();
   }, [userCredential, accountDetail]);
+
+  useEffect(() => {
+    document.title = "Leaderboard";
+  }, []);
   return (
     <div className="LeaderBoardPage">
       <p className="big-text">{accountDetail?.school} Leaderboard</p>

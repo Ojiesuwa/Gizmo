@@ -42,6 +42,10 @@ const WalletPage = () => {
   };
 
   useEffect(() => {
+    document.title = "Fund Wallet";
+  }, []);
+
+  useEffect(() => {
     const script = document.createElement("script");
     script.src = "https://js.paystack.co/v1/inline.js";
     script.async = true;

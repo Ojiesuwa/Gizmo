@@ -51,6 +51,10 @@ const AccountPage = () => {
     fetchAllSchools().then((data) => setAllSchools(data.schools));
   }, [accountDetail]);
 
+  useEffect(() => {
+    document.title = "Account Page";
+  }, []);
+
   return (
     <div className="AccountPage">
       <div className="header fade-down">

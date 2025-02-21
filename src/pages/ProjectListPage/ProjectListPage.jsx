@@ -40,6 +40,9 @@ const ProjectListPage = () => {
   };
 
   useEffect(() => {
+    document.title = "Projects";
+  }, []);
+  useEffect(() => {
     if (!userCredential) return;
     fetchUpdateProjects();
   }, [userCredential]);
