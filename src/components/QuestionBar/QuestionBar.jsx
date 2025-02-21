@@ -14,9 +14,9 @@ const QuestionBar = ({ isVisible, explantion, onHide }) => {
   const handleAskQuestion = async () => {
     try {
       if (!accountDetail) return;
-      if(!explantion) return;
-      console.log(explantion);
-      
+      if (!explantion) return;
+      // console.log$&
+
       setIsLoading(true);
       const res = await generateAnswerToQuizQuestion(
         text,

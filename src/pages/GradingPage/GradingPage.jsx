@@ -27,10 +27,11 @@ const GradingPage = () => {
   const accuracy = ((score / total) * 100).toFixed(0);
 
   const scorePertopic = deduceScorePerTopic(quiz);
-  console.log(scorePertopic);
+  // console.log$&
+
   const scorePerType = deduceScorePerQuizType(quiz);
 
-  console.log(scorePerType);
+  // console.log$&
 
   const handleQuizHome = () => {
     navigate(navigation.quizDashboard.base + "/" + params.projectId);
@@ -55,7 +56,7 @@ const GradingPage = () => {
 
       // Fetch Quiz
       const quizDb = await fetchQuiz(params.quizId);
-      console.log(quizDb);
+      // console.log$&
 
       // Update project and Quiz
       setQuiz(quizDb);

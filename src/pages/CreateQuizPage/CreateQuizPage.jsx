@@ -52,7 +52,7 @@ const CreateQuizPage = () => {
   const [isNameValid, setIsNameValid] = useState(false);
   const [projectButtonText, setProjectButtonText] = useState("Loading");
 
-  //console.log(projectParameter);
+  ////// console.log$&
 
   const handleAddPdf = async () => {
     try {
@@ -162,7 +162,7 @@ const CreateQuizPage = () => {
         userCredential?.uid
       );
 
-      //console.log(flag);
+      ////// console.log$&
 
       if (!flag) {
         toast.error("Project with name already exist");
@@ -185,7 +185,7 @@ const CreateQuizPage = () => {
     //   projectParameter?.expectedDuration
     // );
     // if (expectedTime === 0) {
-    //   //console.log("reset to 0");
+    //   ////// console.log$&
     //   setProjectParameter((p) => ({
     //     ...p,
     //     submitOnTimeElapse: false,

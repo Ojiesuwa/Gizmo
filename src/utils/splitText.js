@@ -3,7 +3,7 @@ const calculateClusterLength = (textLength) =>
 
 export const splitText = (text, numberOfQuestions) => {
   const clusterLength = Math.round(text.split(" ").length / numberOfQuestions);
-  console.log(clusterLength);
+  // console.log$&
 
   const splittedText = text.split("");
 

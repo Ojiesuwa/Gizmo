@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 import { navigation } from "../../site/navigation";
 
 const ProjectListPage = () => {
-  const { userCredential } = useAuth();
+  const { userCredential } = useAuth() || {};
   const [project, setProject] = useState(null);
   const [displayProject, setDisplayProject] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -30,7 +30,7 @@ const ProjectListPage = () => {
   };
 
   const handleSearchAction = (keyword) => {
-    //console.log(project);
+    //// console.log$&
 
     setDisplayProject(
       project?.filter((data) =>

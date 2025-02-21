@@ -43,7 +43,7 @@ const Sidebar = () => {
   };
 
   const handleSearchAction = (keyword) => {
-    //console.log(projects);
+    //// console.log$&
 
     setDisplayProjects(
       projects?.filter((project) =>
@@ -61,7 +61,7 @@ const Sidebar = () => {
       (data) => {
         setProjects(data);
         setDisplayProjects(data);
-        //console.log(data);
+        //// console.log$&
       }
     );
     return () => unsubscribe();

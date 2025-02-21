@@ -9,11 +9,11 @@ const CreateProjectModal = ({
   isVisible,
   onHide,
   isGenerating,
-  projectButtonText
+  projectButtonText,
 }) => {
   const { accountDetail } = useAuth() || {};
 
-  ////console.log(projectParameter);
+  ////// console.log$&
 
   const explanationCost = projectParameter?.explanation ? 10 : 0;
   const pricePerQuestion = 3;

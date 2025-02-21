@@ -18,7 +18,7 @@ const deduceExplanationsPerTopic = (quizDb, topics) => {
     const explanation = explanationArray.join("\n\nNext Concept\n\n");
     return { topic, quizExplanation: explanation };
   });
-  console.log(explantionPerTopic);
+  // console.log$&
 
   return explantionPerTopic;
 };
@@ -37,7 +37,7 @@ const generateAIExplantionPerTopic = (topicBasedExplantion) => {
         prompt
       );
 
-      console.log(prompt, res);
+      // console.log$&
 
       delete topicBasedExplantion.quizExplanation;
 
@@ -59,12 +59,12 @@ export const generateExplanation = ({ quizDb }) => {
       // Deduce topics from db
       const topics = deduceTopics(quizDb);
 
-      console.log(topics);
+      // console.log$&
 
       // Get explanation on topic basis: Scan through the quiz db and deduce the topics along side wuiz explanations
       let deducedExplantion = deduceExplanationsPerTopic(quizDb, topics);
 
-      console.log(deducedExplantion);
+      // console.log$&
 
       // Generate AI data for bullet point and prose
       const AIExplantionPromise = deducedExplantion.map(

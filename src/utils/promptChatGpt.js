@@ -1,34 +1,34 @@
 const promptChatGpt = (system, prompt) => {
   return new Promise(async (resolve, reject) => {
     try {
-      console.log(import.meta.env.VITE_KEY);
+      // console.log$&
 
       const systemMessage = {
-        role: 'system',
+        role: "system",
         content: system,
       };
 
       const apiMessages = [
         {
-          role: 'user',
+          role: "user",
           content: prompt,
         },
       ];
 
       const apiRequestBody = {
-        model: 'gpt-4o-mini',
+        model: "gpt-4o-mini",
         messages: [systemMessage, ...apiMessages],
       };
 
       const requestAction = async () => {
         const response = await fetch(
-          'https://api.openai.com/v1/chat/completions',
+          "https://api.openai.com/v1/chat/completions",
           {
-            method: 'POST',
+            method: "POST",
             headers: {
-              'Content-Type': 'application/json',
+              "Content-Type": "application/json",
 
-              Authorization: 'Bearer ' + `${import.meta.env.VITE_KEY}`,
+              Authorization: "Bearer " + `${import.meta.env.VITE_KEY}`,
             },
             body: JSON.stringify(apiRequestBody),
           }

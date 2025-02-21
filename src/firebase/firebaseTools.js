@@ -117,13 +117,16 @@ export const updateDocumentById = (collectionName, docId, data) =>
 //           const progress =
 //             (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
 //           onProgress(progress);
-//           console.log(`Upload is ${progress}% done`);
+//           // console.log$&
+
 //           switch (snapshot.state) {
 //             case "paused":
-//               console.log("Upload is paused");
+//               // console.log$&
+
 //               break;
 //             case "running":
-//               console.log("Upload is running");
+//               // console.log$&
+
 //               break;
 //           }
 //         },

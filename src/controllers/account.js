@@ -132,7 +132,7 @@ export const updateAccount = (uid, payload) => {
 export const fetchUserRanking = (uid, school, accountDetail) => {
   return new Promise(async (resolve, reject) => {
     try {
-      //console.log(school);
+      //// console.log$&
 
       const leaderboardRef = collection(db, "Accounts");
       const q = query(
@@ -160,7 +160,7 @@ export const fetchUserRanking = (uid, school, accountDetail) => {
             : "Legendary",
       }));
 
-      //console.log("did here");
+      //// console.log$&
 
       if (!isAccountInTop30) {
         const newQ = query(

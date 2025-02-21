@@ -29,8 +29,9 @@ const LecturePage = () => {
   const [isQuestioning, setIsQuestioning] = useState(false);
   const [hasFinished, setHasFinished] = useState(false);
 
-  console.log(hasIntroduced);
-  console.log(explanationIndex);
+  //// console.log$&
+
+  //// console.log$&
 
   const handleAskQuestion = () => {
     setHasIntroduced(true);
@@ -192,7 +193,7 @@ const LecturePage = () => {
   };
 
   const handleChangeToPreviousTopic = () => {
-    console.log(explanationIndex);
+    //// console.log$&
 
     // if (explanationIndex === 0) return;
     setExplanationIndex((p) => {
@@ -203,7 +204,7 @@ const LecturePage = () => {
   };
 
   const handleChangeToNextTopic = () => {
-    console.log("Course has  been moved to the next topic");
+    //// console.log$&
 
     setExplanationIndex((p) => {
       p = parseInt(p);

@@ -1,7 +1,7 @@
 const promptChatGpt = (system, prompt) => {
   return new Promise(async (resolve, reject) => {
     try {
-      console.log(import.meta.env.VITE_KEY);
+      // console.log$&
 
       const systemMessage = {
         role: "system",

@@ -119,9 +119,10 @@ const QuizDashboard = () => {
     try {
       setIsLoading(true);
       const quizDb = await fetchQuizDb(project?.quizDbId);
-      console.log(quizDb);
+      // console.log$&
+
       const quiz = generateQuizFromDb({ quizDb, project: project });
-      console.log(quiz, quizDb, project);
+      // console.log$&
 
       await updateQuiz(quiz, project?.history[0]);
       await setProjectLevel(params.id, 200);

@@ -77,7 +77,7 @@ const SignupComponent = ({ handleAuthTypeChange }) => {
       const data = await fetchAllSchools();
       setAllSchools(data.schools);
 
-      console.log(data);
+      // console.log$&
     } catch (error) {
       console.error(error);
       toast.error("Error fetching all schools");

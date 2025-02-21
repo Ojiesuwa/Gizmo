@@ -40,7 +40,7 @@ const QuizViewPage = () => {
   const [timeSpent, setTimeSpent] = useState(0);
   const [isTimeElapsed, setIsTimeElapsed] = useState(false);
 
-  console.log(quiz);
+  //// console.log$&
 
   const timerLimit = !project
     ? 0
@@ -48,7 +48,7 @@ const QuizViewPage = () => {
 
   const isTimed = timerLimit > 0;
 
-  console.log(project);
+  //// console.log$&
 
   const handleFetchAndUpdateState = async () => {
     try {

@@ -74,19 +74,23 @@ const generateQuizPerChunk = (chunk) => {
           "Generate a JSON array , Do not format in markdown. Cross check for '}' and '{'",
           prompt
         );
-        console.log("Chunk", chunk);
-        console.log("Prompt", prompt);
-        console.log("attempt", attempt);
+        // console.log$&
+
+        // console.log$&
+
+        // console.log$&
 
         try {
           const data = JSON.parse(res);
-          console.log("data", data);
+          // console.log$&
+
           resolve(data);
           break;
         } catch (error) {
-          console.log(res);
+          // console.log$&
 
-          console.log("Fatal error");
+          // console.log$&
+
           console.warn(error.message);
         }
         attempt++;
@@ -109,7 +113,7 @@ export const generateQuizDb = ({ cluster }) => {
 
       const generatedQuiz = await Promise.all(generatedQuizPromise);
 
-      console.log(generatedQuiz);
+      // console.log$&
 
       resolve(generatedQuiz);
     } catch (error) {
@@ -175,7 +179,7 @@ export const generateQuizFromDb = ({ quizDb, project }) => {
       return data;
     });
 
-    console.log(factoredQuiz);
+    // console.log$&
 
     return factoredQuiz.flat(Infinity);
   } catch (error) {
@@ -250,13 +254,13 @@ const markQuestion = (question) => {
         return an object in this form {percentageSimilarity: 40}
         `;
 
-        console.log(userPrompt);
+        // console.log$&
 
         const res = await promptChatGpt(
           "Do not respond in markdown format. Respond with JSON",
           userPrompt
         );
-        console.log(res);
+        // console.log$&
 
         resolve(parseInt(JSON.parse(res).percentageSimilarity) > 50);
       }
@@ -292,7 +296,7 @@ export const deduceScorePerTopic = (quiz) => {
   quiz.forEach((question) => {
     if (!topicObject[question?.topic]) {
       topicObject[question?.topic] = { score: 0, count: 0 };
-      console.log(question?.topic);
+      // console.log$&
     }
     topicObject[question?.topic].score += question?.grade ? 1 : 0;
     topicObject[question?.topic].count += 1;
@@ -333,7 +337,7 @@ export const generateAnswerToQuizQuestion = (
 
       The explanation is given below: "${explanation}"
       `;
-      console.log(prompt);
+      // console.log$&
 
       const res = await promptChatGpt(
         "Do not respond in Markdown. You are a female teacher called Olivia. Be a nice friendly and warm teacher answering a question. Don't include a conclusion stating your name",
@@ -399,7 +403,7 @@ export const formatQuizTopic = ({ quizDb }) => {
     ${JSON.stringify(allTopics)}
       `;
 
-      console.log(prompt);
+      // console.log$&
 
       const res = await promptChatGpt(
         "Generate a JSON Object. Do not use mark down mode",
@@ -424,7 +428,8 @@ export const formatQuizTopic = ({ quizDb }) => {
         topic: deduceGeneralTopic(question.topic),
       }));
 
-      console.log(newQuizDb);
+      // console.log$&
+
       resolve(newQuizDb);
     } catch (error) {
       console.error(error);

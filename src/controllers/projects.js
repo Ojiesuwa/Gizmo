@@ -71,13 +71,13 @@ export const createNewProject = (
         lectureId = await uploadExplanation({ lecture });
       }
 
-      //console.log(lecture);
+      //// console.log$&
 
       cb("Uploading project to cloud");
       // Upload QuizDb to firebase and deduct id
       const quizDbId = await uploadQuizDb({ quizDb: formattedQuizDatabase });
 
-      //console.log(lectureId, quizDbId);
+      //// console.log$&
 
       // Create Quiz
       const quiz = generateQuizFromDb({
@@ -99,7 +99,7 @@ export const createNewProject = (
         ...projectParameters,
       };
 
-      //console.log(payload);
+      //// console.log$&
 
       // Upload payload and deduce id
       const projectId = await addDocument("Project", payload);
@@ -116,7 +116,7 @@ export const createNewProject = (
 export const validateProjectName = (title, uid) => {
   return new Promise(async (resolve, reject) => {
     try {
-      //console.log(title, uid);
+      //// console.log$&
 
       const colRef = collection(db, "Project");
       const q = query(
@@ -154,7 +154,7 @@ export const fetchAllProjectWithId = (uid) => {
   return new Promise(async (resolve, reject) => {
     try {
       const res = await getCollectionByField("Project", "uid", uid);
-      //console.log(res);
+      //// console.log$&
 
       resolve(res);
     } catch (error) {
@@ -190,7 +190,7 @@ export const liveListenToUserProjects = (uid, onchange) => {
         ...doc.data(),
       }));
 
-      //console.log(updatedData);
+      //// console.log$&
 
       onchange(updatedData);
     });

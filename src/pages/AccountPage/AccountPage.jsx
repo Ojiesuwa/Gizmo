@@ -29,7 +29,7 @@ const AccountPage = () => {
       let payload = { ...formData };
       if (payload.school === "others") {
         await addNewSchool(payload.customSchool);
-        //console.log(payload);
+        //// console.log$&
 
         payload.school = payload.customSchool;
         delete payload.customSchool;
